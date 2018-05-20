@@ -3,7 +3,7 @@ import { URMath } from './math';
 import { Config } from './config';
 
 let host: string = Config.UR_IP;
-let port: number = 30002;
+let port: number = Config.UR_Port;
 
 const socket = new Socket();
 
