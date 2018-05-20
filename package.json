@@ -1,0 +1,25 @@
+{
+  "name": "PlatformR",
+  "version": "1.0.0",
+  "description": "Platform for manage Universal Robotick",
+  "main": "index.js",
+  "author": "Yuuki Wesp",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@types/linq": "^2.2.33",
+    "@types/mathjs": "^3.20.0",
+    "@types/socket.io": "^1.4.33",
+    "@types/socket.io-client": "^1.4.32",
+    "linq": "^3.1.0",
+    "mathjs": "^4.2.2",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "typescript": "^2.8.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha",
+    "start": "tsc && node build/index.js"
+  }
+}
