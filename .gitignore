@@ -63,3 +63,5 @@ typings/
 \.idea/
 
 \.vs/
+
+src/config\.ts

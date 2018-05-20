@@ -1,9 +1,8 @@
 import { Socket } from "net";
-import { fork } from "cluster";
 import { URMath } from './math';
+import { Config } from './config';
 
-
-let host: string = "192.168.4.247";
+let host: string = Config.UR_IP;
 let port: number = 30002;
 
 const socket = new Socket();
