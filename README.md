@@ -1,6 +1,6 @@
-# UR5 ⚙️ - TypeScript Platform 🚀
+# 🌀 UR5 ⚙️ - TypeScript Platform 🚀
 
-# Dependences 🌜
+### Dependences 🌜
 1. Yarn 1.6 or above
 2. NodeJS 9.0 or above
 3. TypeScript 2.6 or above (in global)
@@ -20,7 +20,7 @@
 5. `yarn start`
 6. You are perfect! 💞
 
-# Run test ☃️
+### Run test ☃️
 
 1. `yarn build`
 2. `yarn test`
