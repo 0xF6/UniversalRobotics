@@ -65,3 +65,7 @@ typings/
 \.vs/
 
 src/config\.ts
+
+\.vscode/
+
+bin/

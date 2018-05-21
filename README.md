@@ -6,6 +6,12 @@
 3. TypeScript 2.6 or above (in global)
 4. Mocha 5.1 or above (in global)
 
+
+# Hardware
+
+1. PolyScope 1.8
+2. URController 1.8
+
 # Install 💦 
 1. Create `config.ts`
 2. Copy class for `config.example.ts` to `config.ts`

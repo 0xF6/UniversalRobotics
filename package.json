@@ -9,6 +9,7 @@
   "dependencies": {
     "@types/linq": "^2.2.33",
     "@types/mathjs": "^3.20.0",
+    "@types/node": "^10.1.2",
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "typescript": "^2.8.3"
@@ -16,6 +17,6 @@
   "scripts": {
     "build": "tsc",
     "test": "mocha",
-    "start": "tsc && node build/index.js"
+    "start": "tsc && node bin/app.js"
   }
 }

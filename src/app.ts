@@ -1,7 +1,8 @@
 import { Socket } from "net";
 import { URMath } from './math';
 import { Config } from './config';
-
+import * as colors from 'colors/safe';
+import { Logger } from "./Logger";
 let host: string = Config.UR_IP;
 let port: number = Config.UR_Port;
 
@@ -33,11 +34,14 @@ socket.on('disconnect', () => {
  *  Byte shifts to point to the right byte data inside a packet
  */
 enum URBytePoint {
+    GET_MESSAGE_TYPE = 4,
     GET_TIME = 1,
-    GET_JOINT_POSITIONS = 252,
-    GET_JOINT_SPEEDS = 300,
+    GET_JOINT_POSITIONS = 252, // Real Joint Position
+    GET_JOINT_SPEEDS = 300,    // Real Joint Speeds
     GET_JOINT_CURRENTS = 348,
-    GET_TCP_FORCES = 540
+    GET_TCP_FORCES = 540,
+    GET_TCP_POSITION = 444,    // Real TCP position
+    GET_TCP_SPEED = 492        // Real TCP speed
 }
 
 class UR5 {
@@ -47,6 +51,22 @@ class UR5 {
      * @param buff packet buffer
      */
     public static on_packet(packet: Buffer) {
+        let msgType = UR5.read_message_type(packet); // byte op code
+
+
+        switch (msgType) {
+            case -1:
+                Logger.Error("case disconnect.");
+                process.exit(-1);
+                break;
+            case 5:
+                Logger.Log("Modbus error");
+                break;
+            case 16: // normal packet
+                break;
+        }
+
+
         let ROBOT_JOINTS = new Array<number>();
 
         let RAD = UR5.packet_value(packet, <number>URBytePoint.GET_JOINT_POSITIONS);
@@ -90,6 +110,14 @@ class UR5 {
         if (is_auto_round)
             return this.auto_round(list);
         return list;
+    }
+
+    public static read_message_type(buff: Buffer): number {
+        if (buff.length < 5) {
+            console.log(`Not available offset (maybe older Polyscope version?): ${buff.length} - 4`)
+            return undefined;
+        }
+        return buff[4];
     }
 
     /**

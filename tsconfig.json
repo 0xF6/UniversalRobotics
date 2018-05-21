@@ -1,13 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "sourceMap": true,
-    "outDir": "build",
-    "rootDir": "src",
-    "experimentalDecorators": true
+    "target": "esnext", // Таргет на ECMA SCRIPT 6 (он будет компилировать в жоес версии ES6)
+    "module": "commonjs", // Модульная система ноды на рекваерах
+    "sourceMap": true, // бинарники для информации о исходниках (для дебага, что-=бы он знал что и как выглядит на самом деле)
+    "outDir": "bin", // куда высираем компиль жоеса
+    "rootDir": "src", // рут папка исходников
+    "moduleResolution": "node", // помечаем резолюцию для тайпскрипта, мол, это проект ноды
+    "experimentalDecorators": true, // декораторы
+    "typeRoots": [
+      "node_modules/@types" // откуда брать типы и тайпинги
+    ]
   },
   "include": [
-    "src/**/*"
+    "src/**/*" // какие файлы сканировать
+  ],
+  "exclude": [ // какие папки\файлы игнорировать
+    "node_modules",
+    "bin",
+    "*.js"
   ]
 }

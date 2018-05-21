@@ -1,4 +1,18 @@
 export class URMath {
+    // From polyscope
+    private static RAD_PER_DEGREE: number = 0.017453292519943295;
+    private static DEGREES_PER_RAD: number = 57.29577951308232;
+    //
+
+    public static getDegrees(angleInRadians) {
+        return URMath.DEGREES_PER_RAD * angleInRadians;
+    }
+
+    public static getRadians(angleInDegrees) {
+        return URMath.RAD_PER_DEGREE * angleInDegrees;
+    }
+
+
     public static Round(num, dp): number {
         if (arguments.length != 2) throw new Error("2 arguments required");
         num = String(num);
