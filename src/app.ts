@@ -23,6 +23,9 @@ socket.on('data', data => {
         return;
     }
     let arew = URCore.on_packet(data);
+    if (!arew)
+        return;
+    Logger.Log(JSON.stringify(arew));
 });
 socket.on('disconnect', () => {
     Logger.Log("Disconnect.");

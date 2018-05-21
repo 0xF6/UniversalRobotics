@@ -5,11 +5,18 @@ import { UR5Info } from "./UR5Info";
 
 export class URCore {
     public static Obj = { JOINTS: "", robot_current: 0, forces_tcp: [0] }
+    public static PacketID: number = 0;
     /**
      * Action to take when a new packet arrives
      * @param buff packet buffer
      */
     public static on_packet(packet: Buffer) {
+
+        URCore.PacketID++;
+        if (URCore.PacketID % 5 != 0)
+            return undefined;
+
+        let base: UR5Info = new UR5Info();
         let offset = 0;
         let size_packet = URCore.packet_size(packet);
         offset += 4; // int32
@@ -27,40 +34,113 @@ export class URCore {
                 // TODO
                 break;
             case 16: // normal packet
-                let base: UR5Info = new UR5Info();
-                let packet_start = offset;
-                let packageLength = packet.readInt32BE(offset);
-                offset += 4;
-                let packet_type = packet.readByteBE(offset);
-                offset++;
-                switch (packet_type) {
-                    case 0:
-                        {
-                            base.timestamp = packet.readInt64BE(offset);
-                            offset += 8;
-                            base.physical = packet.readBooleanBE(offset);
-                            offset++;
-                            base.real = packet.readBooleanBE(offset);
-                            offset++;
-                            base.robotPowerOn = packet.readBooleanBE(offset);
-                            offset++;
-                            base.emergencyStopped = packet.readBooleanBE(offset);
-                            offset++;
-                            base.securityStopped = packet.readBooleanBE(offset);
-                            offset++;
-                            base.programRunning = packet.readBooleanBE(offset);
-                            offset++;
-                            base.programPaused = packet.readBooleanBE(offset);
-                            offset++;
+                while (offset < size_packet) {
 
-                            base.mode = packet.readByteBE(offset);
-                            if (base.mode < 0)
-                                base.mode = 256;
-                            offset++;
-                            base.speedFraction = packet.readDoubleBE(offset);
-                            offset += 8;
-                            return base;
-                        }
+                    let packet_start = offset;
+                    let packageLength = packet.readInt32BE(offset);
+                    offset += 4;
+                    let packet_type = packet.readByteBE(offset);
+                    offset++;
+                    Logger.Warn(`packet_type: ${packet_type}`);
+                    switch (packet_type) {
+                        case 0:
+                            {
+                                base.timestamp = packet.readInt64BE(offset);
+                                offset += 8;
+                                base.physical = packet.readBooleanBE(offset);
+                                offset++;
+                                base.real = packet.readBooleanBE(offset);
+                                offset++;
+                                base.robotPowerOn = packet.readBooleanBE(offset);
+                                offset++;
+                                base.emergencyStopped = packet.readBooleanBE(offset);
+                                offset++;
+                                base.securityStopped = packet.readBooleanBE(offset);
+                                offset++;
+                                base.programRunning = packet.readBooleanBE(offset);
+                                offset++;
+                                base.programPaused = packet.readBooleanBE(offset);
+                                offset++;
+
+                                base.mode = packet.readByteBE(offset);
+                                if (base.mode < 0)
+                                    base.mode = 256;
+                                offset++;
+                                base.speedFraction = packet.readDoubleBE(offset);
+                                offset += 8;
+                            }
+                            break;
+                        case 1:
+                            {
+                                let code = 0;
+                                while (true) {
+                                    if (code >= 6)
+                                        break;
+                                    base.sector[code].JointPosition = packet.readDoubleBE(offset);
+                                    offset += 8;
+                                    base.sector[code].JointTarger = packet.readDoubleBE(offset);
+                                    offset += 8;
+                                    base.sector[code].JointSpeed = packet.readDoubleBE(offset);
+                                    offset += 8;
+                                    base.sector[code].JointCurrent = packet.readFloatBE(offset);
+                                    offset += 4;
+                                    base.sector[code].Voltage = packet.readFloatBE(offset);
+                                    offset += 4;
+                                    base.sector[code].MotorTemperature = packet.readFloatBE(offset);
+                                    offset += 4;
+                                    base.sector[code].MicroTemperature = packet.readFloatBE(offset);
+                                    offset += 4;
+                                    base.sector[code].Mode = packet.readByteBE(offset);
+                                    if (base.sector[code].Mode < 0)
+                                        base.sector[code].Mode = 256;
+                                    offset++;
+                                    code++;
+                                }
+                            }
+                            break;
+                        case 2:
+                            {
+                                base.analogInputRange[2] = packet.readByteBE(offset);
+                                offset++;
+                                base.analogInputRange[3] = packet.readByteBE(offset);
+                                offset++;
+                                base.analogIn[2] = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.analogIn[3] = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.toolVoltage48V = packet.readFloatBE(offset);
+                                offset += 4;
+                                base.toolOutputVoltage = packet.readByteBE(offset);
+                                offset++;
+                                base.toolCurrent = packet.readFloatBE(offset);
+                                offset += 4;
+                                base.toolTemperature = packet.readFloatBE(offset);
+                                offset += 4;
+                                base.toolMode = packet.readByteBE(offset);
+                                if (base.toolMode < 0)
+                                    base.toolMode = 256;
+                                offset++;
+                            }
+                            break;
+                        case 4:
+                            {
+                                base.ToolPosition.X = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.ToolPosition.Y = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.ToolPosition.Z = packet.readDoubleBE(offset);
+                                offset += 8;
+
+                                base.ToolOrientation.X = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.ToolOrientation.Y = packet.readDoubleBE(offset);
+                                offset += 8;
+                                base.ToolOrientation.Z = packet.readDoubleBE(offset);
+                                offset += 8;
+                                return base;
+                            }
+
+                    }
                 }
                 break;
         }
