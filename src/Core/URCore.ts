@@ -13,7 +13,7 @@ export class URCore {
     public static on_packet(packet: Buffer) {
 
         URCore.PacketID++;
-        if (URCore.PacketID % 5 != 0)
+        if (URCore.PacketID % 5 != 0) // Record once every 5 packets (125/5=25 Hz)
             return undefined;
 
         let base: UR5Info = new UR5Info();

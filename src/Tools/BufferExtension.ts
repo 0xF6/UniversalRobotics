@@ -15,5 +15,4 @@ declare interface Buffer {
     Buffer.prototype.readByteBE = function (this: Buffer, offset: number): number {
         return this[offset];
     }
-    console.log("saasasas")
 })();
