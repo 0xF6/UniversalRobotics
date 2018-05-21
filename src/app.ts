@@ -1,8 +1,8 @@
 import { Socket } from "net";
 import { Config } from './config';
 import { URCore } from "./Core/URCore";
-import { Logger } from './Logger';
-
+import { Logger } from "./Tools/Logger";
+import "./Tools/BufferExtension";
 // -======================================================-
 
 let host: string = Config.UR_IP;

@@ -2,12 +2,6 @@
 # yarn lockfile v1
 
 
-"@types/colors@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@types/colors/-/colors-1.2.1.tgz#57703f1a9f7f5fc40afb81eef13e96acdd1016a6"
-  dependencies:
-    colors "*"
-
 "@types/linq@^2.2.33":
   version "2.2.33"
   resolved "https://registry.yarnpkg.com/@types/linq/-/linq-2.2.33.tgz#79e9726b8fb02469e5a8941c58a9fb4f95dc2b8c"
@@ -20,28 +14,19 @@
   dependencies:
     decimal.js "^10.0.0"
 
-"@types/node@^10.1.2":
+"@types/node-int64@^0.4.29":
+  version "0.4.29"
+  resolved "https://registry.yarnpkg.com/@types/node-int64/-/node-int64-0.4.29.tgz#8c7c16a7c1195ae4f8beaa903b0018ac66291d16"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*", "@types/node@^10.1.2":
   version "10.1.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.1.2.tgz#1b928a0baa408fc8ae3ac012cc81375addc147c6"
-
-ansi-styles@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-1.1.0.tgz#eaecbf66cd706882760b2f4691582b8f55d7a7de"
-
-colors@*, colors@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.0.tgz#5f20c9fef6945cb1134260aab33bfbdc8295e04e"
 
 complex.js@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/complex.js/-/complex.js-2.0.4.tgz#d8e7cfb9652d1e853e723386421c1a0ca7a48373"
-
-coolors@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/coolors/-/coolors-0.0.2.tgz#f06d5e08cdee556ee44dc6c6b3483223a0088a32"
-  dependencies:
-    ansi-styles "^1.1.0"
-    supports-color "^0.2.0"
 
 decimal.js@9.0.1:
   version "9.0.1"
@@ -80,13 +65,13 @@ mathjs@^4.2.2:
     tiny-emitter "2.0.2"
     typed-function "1.0.3"
 
+node-int64@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
+
 seed-random@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/seed-random/-/seed-random-2.2.0.tgz#2a9b19e250a817099231a5b99a4daf80b7fbed54"
-
-supports-color@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-0.2.0.tgz#d92de2694eb3f67323973d7ae3d8b55b4c22190a"
 
 tiny-emitter@2.0.2:
   version "2.0.2"

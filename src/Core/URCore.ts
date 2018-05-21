@@ -1,6 +1,7 @@
 import { URBytePoint } from "./URBytePoint";
 import { Logger } from "../Tools/Logger";
 import { URMath } from "../Tools/URMath";
+import { UR5Info } from "./UR5Info";
 
 export class URCore {
     public static Obj = { JOINTS: "", robot_current: 0, forces_tcp: [0] }
@@ -9,7 +10,11 @@ export class URCore {
      * @param buff packet buffer
      */
     public static on_packet(packet: Buffer) {
+        let offset = 0;
+        let size_packet = URCore.packet_size(packet);
+        offset += 4; // int32
         let msgType = URCore.read_message_type(packet); // byte op code
+        offset++; // byte
 
 
         switch (msgType) {
@@ -19,8 +24,44 @@ export class URCore {
                 break;
             case 5:
                 Logger.Log("Modbus error");
+                // TODO
                 break;
             case 16: // normal packet
+                let base: UR5Info = new UR5Info();
+                let packet_start = offset;
+                let packageLength = packet.readInt32BE(offset);
+                offset += 4;
+                let packet_type = packet.readByteBE(offset);
+                offset++;
+                switch (packet_type) {
+                    case 0:
+                        {
+                            base.timestamp = packet.readInt64BE(offset);
+                            offset += 8;
+                            base.physical = packet.readBooleanBE(offset);
+                            offset++;
+                            base.real = packet.readBooleanBE(offset);
+                            offset++;
+                            base.robotPowerOn = packet.readBooleanBE(offset);
+                            offset++;
+                            base.emergencyStopped = packet.readBooleanBE(offset);
+                            offset++;
+                            base.securityStopped = packet.readBooleanBE(offset);
+                            offset++;
+                            base.programRunning = packet.readBooleanBE(offset);
+                            offset++;
+                            base.programPaused = packet.readBooleanBE(offset);
+                            offset++;
+
+                            base.mode = packet.readByteBE(offset);
+                            if (base.mode < 0)
+                                base.mode = 256;
+                            offset++;
+                            base.speedFraction = packet.readDoubleBE(offset);
+                            offset += 8;
+                            return base;
+                        }
+                }
                 break;
         }
 
