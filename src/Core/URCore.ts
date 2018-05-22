@@ -12,7 +12,7 @@ export class URCore {
      * Action to take when a new packet arrives
      * @param buff packet buffer
      */
-    public static on_packet(packet: Buffer) {
+    public static on_packet(packet: Buffer): UR5Info {
 
         URCore.PacketID++;
         if (URCore.PacketID % 5 != 0) // Record once every 5 packets (125/5=25 Hz)
@@ -199,21 +199,7 @@ export class URCore {
                 }
                 break;
         }
-
-
-        let ROBOT_JOINTS = new Array<number>();
-
-        let RAD = URCore.packet_value(packet, <number>URBytePoint.GET_JOINT_POSITIONS);
-
-        for (let dv of RAD) {
-            ROBOT_JOINTS.push(URMath.Round(dv * 180 / Math.PI, 5));
-        }
-
-        let speed = URCore.packet_value(packet, <number>URBytePoint.GET_JOINT_SPEEDS);
-        let robot_current = URCore.packet_value(packet, <number>URBytePoint.GET_JOINT_CURRENTS);
-        let forces_tcp = URCore.packet_value(packet, <number>URBytePoint.GET_TCP_FORCES);
-
-        return { Speed: speed, TCPForce: forces_tcp, R_A_D: ROBOT_JOINTS };
+        return base;
     }
 
     public static auto_round(arr: Array<number>): Array<number> {

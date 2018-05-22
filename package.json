@@ -2,15 +2,16 @@
   "name": "PlatformR",
   "version": "1.0.0",
   "description": "Platform for manage Universal Robotick",
-  "main": "index.js",
+  "main": "bin/app.js",
   "author": "Yuuki Wesp",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@types/fibers": "^0.0.30",
+    "@types/electron": "^1.6.10",
     "@types/mathjs": "^3.20.0",
     "@types/node": "^10.1.2",
     "@types/node-int64": "^0.4.29",
+    "electron": "2.0.1",
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "node-int64": "^0.4.0",
@@ -20,6 +21,7 @@
   "scripts": {
     "build": "tsc",
     "test": "@echo off && echo test not found",
-    "start": "tsc && node bin/app.js"
+    "start": "tsc && node bin/app.js",
+    "win": "tsc && electron bin/app.js"
   }
 }
