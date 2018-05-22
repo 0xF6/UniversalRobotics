@@ -7,13 +7,14 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@types/linq": "^2.2.33",
+    "@types/fibers": "^0.0.30",
     "@types/mathjs": "^3.20.0",
     "@types/node": "^10.1.2",
     "@types/node-int64": "^0.4.29",
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "node-int64": "^0.4.0",
+    "sleep-promise": "^6.0.0",
     "typescript": "^2.8.3"
   },
   "scripts": {

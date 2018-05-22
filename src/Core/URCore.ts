@@ -2,10 +2,12 @@ import { URBytePoint } from "./URBytePoint";
 import { Logger } from "../Tools/Logger";
 import { URMath } from "../Tools/URMath";
 import { UR5Info } from "./UR5Info";
+import * as Enumerable from 'linq';
 
 export class URCore {
     public static Obj = { JOINTS: "", robot_current: 0, forces_tcp: [0] }
     public static PacketID: number = 0;
+    public static IsMove: boolean;
     /**
      * Action to take when a new packet arrives
      * @param buff packet buffer
@@ -22,8 +24,6 @@ export class URCore {
         offset += 4; // int32
         let msgType = URCore.read_message_type(packet); // byte op code
         offset++; // byte
-
-
         switch (msgType) {
             case -1:
                 Logger.Error("case disconnect.");
@@ -41,7 +41,7 @@ export class URCore {
                     offset += 4;
                     let packet_type = packet.readByteBE(offset);
                     offset++;
-                    Logger.Warn(`packet_type: ${packet_type}`);
+                    //Logger.Warn(`Package type: ${packet_type}`);
                     switch (packet_type) {
                         case 0:
                             {
@@ -122,6 +122,30 @@ export class URCore {
                                 offset++;
                             }
                             break;
+
+                        case 3:
+                            offset += 40;
+                            base.masterTemperature = packet.readFloatBE(offset);
+                            offset += 4;
+                            base.robotVoltage48V = packet.readFloatBE(offset);
+                            offset += 4;
+                            base.robotCurrent = packet.readFloatBE(offset);
+                            offset += 4;
+                            base.masterIOCurrent = packet.readFloatBE(offset);
+                            offset += 4;
+                            base.masterSafetyState = packet.readByteBE(offset);
+                            offset++;
+                            base.masterOnOffState = packet.readByteBE(offset);
+                            offset++;
+
+                            let signalResponseTimeInMs = packet.readByteBE(offset);
+                            offset++;
+
+                            if (signalResponseTimeInMs == 1) {
+                                offset += 13;
+                            }
+
+                            break;
                         case 4:
                             {
                                 base.ToolPosition.X = packet.readDoubleBE(offset);
@@ -137,8 +161,39 @@ export class URCore {
                                 offset += 8;
                                 base.ToolOrientation.Z = packet.readDoubleBE(offset);
                                 offset += 8;
-                                return base;
+
+
+
+                                if (base.securityStopped) {
+                                    Logger.Warn("!!!SECUTIRY STOPPED!!!");
+                                    URCore.IsMove = true;
+                                    return;
+                                }
+                                if (base.emergencyStopped) {
+                                    Logger.Error("!!!EMERGENCY STOPPED!!!");
+                                    URCore.IsMove = true;
+                                    return;
+                                }
                             }
+                            break;
+                        case 7:
+                            for (let i = 0; i != 6; i++) {
+                                base.sector[i].force_mode_frame = packet.readDoubleBE(offset);
+                                offset += 8;
+                            }
+                            base.Dexterity = packet.readDoubleBE(offset);
+                            offset += 8;
+                            break;
+                        case 8:
+                            base.teachButtonPressed = packet.readBooleanBE(offset);
+                            offset++;
+                            base.teachButtonEnabled = packet.readBooleanBE(offset);
+                            offset++;
+                            URCore.IsMove = Enumerable.from(base.sector).all(x => x.JointSpeed != 0);
+                            break;
+                        case 9:
+                            offset += packageLength - 5;
+                            break;
 
                     }
                 }

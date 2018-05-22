@@ -2,11 +2,9 @@
 # yarn lockfile v1
 
 
-"@types/linq@^2.2.33":
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/@types/linq/-/linq-2.2.33.tgz#79e9726b8fb02469e5a8941c58a9fb4f95dc2b8c"
-  dependencies:
-    linq "*"
+"@types/fibers@^0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/fibers/-/fibers-0.0.30.tgz#7fc7b9a9a14cb9a9e20416011b16195400d485b8"
 
 "@types/mathjs@^3.20.0":
   version "3.20.0"
@@ -48,7 +46,7 @@ javascript-natural-sort@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
 
-linq@*, linq@^3.1.0:
+linq@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/linq/-/linq-3.1.0.tgz#fba9af7619273092e5f1b7d5fef8f0a364f89693"
 
@@ -72,6 +70,10 @@ node-int64@^0.4.0:
 seed-random@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/seed-random/-/seed-random-2.2.0.tgz#2a9b19e250a817099231a5b99a4daf80b7fbed54"
+
+sleep-promise@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/sleep-promise/-/sleep-promise-6.0.0.tgz#a80b4c3c26ed553c73c9db7234bc0304f7d42d4a"
 
 tiny-emitter@2.0.2:
   version "2.0.2"

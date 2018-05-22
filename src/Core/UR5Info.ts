@@ -34,9 +34,25 @@ export class UR5Info {
     public toolCurrent: number;
     public toolTemperature: number;
     public toolMode: number;
+    //id:3
+    public masterTemperature: number;
+    public robotVoltage48V: number;
+    public robotCurrent: number;
+    public masterIOCurrent: number;
+
+    public masterSafetyState: number; // byte
+    public masterOnOffState: number; // byte
+
     //id:4
     public ToolPosition: URToolPosition = new URToolPosition();
     public ToolOrientation: URToolOrientation = new URToolOrientation();
+
+    //id:7
+    public Dexterity: number;
+
+    //id:8
+    public teachButtonPressed: boolean;
+    public teachButtonEnabled: boolean;
 }
 
 export class URJointSector {
@@ -53,6 +69,10 @@ export class URJointSector {
     public JointTarger: number;
     public JointPosition: number;
     public JointSpeed: number;
+
+
+    //id: 7 
+    public force_mode_frame: number;
 }
 
 export class URToolPosition {
