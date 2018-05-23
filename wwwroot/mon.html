@@ -1,0 +1,16 @@
+<head>
+    <title>Sosatt</title>
+</head>
+
+<body>
+    sosatt
+</body>
+
+
+<script>
+    console.log("asd")
+    const { ipcRenderer } = require('electron')
+    ipcRenderer.on("ur5", function (event, arg) {
+        console.log(arg)
+    });
+</script>

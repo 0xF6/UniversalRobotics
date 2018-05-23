@@ -15,6 +15,7 @@
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "node-int64": "^0.4.0",
+    "serialport": "^6.2.0",
     "sleep-promise": "^6.0.0",
     "typescript": "^2.8.3"
   },
@@ -22,6 +23,7 @@
     "build": "tsc",
     "test": "@echo off && echo test not found",
     "start": "tsc && node bin/app.js",
-    "win": "tsc && electron bin/app.js"
+    "win": "tsc && electron bin/app.js",
+    "win-build": "tsc && electron-packager . UR5 --ignore=node_modules/electron* --platform=win32 --arch=x64 --out=./Release --overwrite --ignore=Release"
   }
 }

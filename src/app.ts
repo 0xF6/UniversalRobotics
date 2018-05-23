@@ -4,7 +4,7 @@ import { Socket } from "net";
 import { Config } from './config';
 import { URCore } from './Core/URCore';
 import { Logger } from './Tools/Logger';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
 // Import Extensions
 import "./Tools/BufferExtension";
 // -======================================================-
@@ -35,12 +35,13 @@ socket.on('data', data => {
     catch (e) { Logger.Error(e); }
     if (!packet_robot)
         return;
+    ipcRenderer.send('ur5', { opcode: 14, data: { isComplete: true } })
 });
 socket.on('disconnect', () => {
     Logger.Log("Disconnected.");
 });
 
-let win = null;
+let win: BrowserWindow = null;
 app.on("ready", () => {
     win = new BrowserWindow({
         width: 800, height: 550,
@@ -49,8 +50,22 @@ app.on("ready", () => {
     win.loadURL(`file://${__dirname}/../wwwroot/index.html`);
     win.setMenu(null);
     win.setResizable(false);
+    win.webContents.openDevTools();
     win.on("closed", () => {
         win = null;
         socket.end();
     });
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform != 'darwin') {
+        app.quit();
+    }
+});
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg);
+    if (arg.opcode === 14 && arg.data.isComplete) {
+        win.loadURL(`file://${__dirname}/../wwwroot/mon.html`);
+    }
 });
