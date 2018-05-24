@@ -1,16 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
 <head>
-    <title>Sosatt</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="application-name" content="UR5">
+    <meta name="description" content="UR5 Monitor">
+    <title>UR5 Monitor</title>
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
+    <link rel="shortcut icon" href="./images/robot-icon-29.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <script src="./../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.1/js/jquery.tablesorter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js"></script>
+    <script>if (typeof exports !== 'object') { exports = {}; }</script>
+    <script src="./../bin/Tools/Logger.js"></script>
+    <script src="./../bin/Tools/URMath.js"></script>
+    <script>if (window.module) module = window.module;</script>
 </head>
 
 <body>
-    sosatt
+    <br>
+    <div id="body_container" class="ui container">
+        <div id="security_stop" class="ui icon warning message hidden">
+            <i class="close icon"></i>
+            <div class="content">
+                <div class="header">
+                    Security Stop!
+                </div>
+                <p></p>
+            </div>
+        </div>
+        <div id="teach_alert" class="ui icon warning message hidden">
+            <i class="close icon"></i>
+            <div class="content">
+                <div class="header">
+                    Teach Button Pressed!
+                </div>
+                <p>Free movement of engines is included!</p>
+            </div>
+        </div>
+        <h4 class="ui horizontal divider header">
+            <i class="tag icon"></i>
+            Monitor
+        </h4>
+
+
+        <table class="ui very basic collapsing celled table">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Voltage
+                    </td>
+                    <td>
+                        <div id="Voltage" class="ui label">
+                            0.0 V
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Power
+                    </td>
+                    <td>
+                        <div id="power" class="ui red horizontal label">Off</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program
+                    </td>
+                    <td>
+                        <div id="prog_playing" class="ui red horizontal label">NONE</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Temperature
+                    </td>
+                    <td>
+                        <div id="master_temp" class="ui label">
+                            0.0
+                            <div class="detail">&deg;C</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <h4 style="position: fixed; bottom: 0;" class="ui horizontal divider header">
+            <i class="ellipsis horizontal icon"></i>
+        </h4>
+        <br>
+    </div>
+
 </body>
 
 
 <script>
-    console.log("asd")
     const { ipcRenderer } = require('electron')
     ipcRenderer.on("ur5", function (event, arg) {
-        console.log(arg)
+        console.log(arg);
+
+        $("#Voltage").text(`${(+URMath.Round(arg.data.robotVoltage48V, 2)).toFixed(1)} V`);
+        $("#master_temp").html(`${(+URMath.Round(arg.data.masterTemperature, 2)).toFixed(1)}  <div class="detail">&deg;C</div>`);
+
+        if (arg.data.robotPowerOn) {
+            $("#power").removeClass("red").addClass("green").text("ON");
+        }
+        else {
+            $("#power").removeClass("green").addClass("red").text("OFF");
+        }
+
+        if (arg.data.securityStopped) {
+            $("#security_stop").removeClass("hidden");
+        } else {
+            $("#security_stop").addClass("hidden");
+        }
+
+        if (arg.data.programRunning) {
+            $("#prog_playing").text("WORK").removeClass("red").removeClass("yellow").addClass("green");
+        } else if (arg.data.programPaused) {
+            $("#prog_playing").text("PAUSE").removeClass("red").removeClass("green").addClass("yellow");
+        } else {
+            $("#prog_playing").text("NONE").removeClass("yellow").removeClass("green").addClass("red");
+        }
+
+        if (arg.data.teachButtonPressed) {
+            $("#teach_alert").removeClass("hidden");
+        } else {
+            $("#teach_alert").addClass("hidden");
+        }
+
+        //robotPowerOn
     });
+    const { getCurrentWindow, globalShortcut } = require('electron').remote;
+    console.log(URMath);
+    var reload = () => {
+        getCurrentWindow().reload()
+    }
+
+    globalShortcut.register('F5', reload);
+    globalShortcut.register('CommandOrControl+R', reload);
+    window.addEventListener('beforeunload', () => {
+        globalShortcut.unregister('F5', reload);
+        globalShortcut.unregister('CommandOrControl+R', reload);
+    })
 </script>
+
+</html>

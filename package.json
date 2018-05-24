@@ -12,6 +12,7 @@
     "@types/node": "^10.1.2",
     "@types/node-int64": "^0.4.29",
     "electron": "2.0.1",
+    "jquery": "^3.3.1",
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "node-int64": "^0.4.0",

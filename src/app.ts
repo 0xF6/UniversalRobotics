@@ -35,7 +35,9 @@ socket.on('data', data => {
     catch (e) { Logger.Error(e); }
     if (!packet_robot)
         return;
-    ipcRenderer.send('ur5', { opcode: 14, data: { isComplete: true } })
+    if (envs) {
+        envs.sender.send('ur5', { opcode: 15, data: packet_robot });
+    }
 });
 socket.on('disconnect', () => {
     Logger.Log("Disconnected.");
@@ -62,10 +64,12 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
-
+var envs = undefined;
 ipcMain.on('asynchronous-message', (event, arg) => {
     console.log(arg);
+    envs = event;
     if (arg.opcode === 14 && arg.data.isComplete) {
         win.loadURL(`file://${__dirname}/../wwwroot/mon.html`);
     }
 });
+
