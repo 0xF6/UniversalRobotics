@@ -35,7 +35,7 @@
 2. 30001 - Modbus port
 3. 29999 - Polyscope dashboard port, command port
 
-#### 29999 Port, commands
+#### 29999 || 30001 Port, commands
 
 Send via socket ASCII text command.
 
