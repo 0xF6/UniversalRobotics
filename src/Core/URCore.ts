@@ -2,10 +2,9 @@ import { URBytePoint } from "./URBytePoint";
 import { Logger } from "../Tools/Logger";
 import { URMath } from "../Tools/URMath";
 import { UR5Info } from "./UR5Info";
-import * as Enumerable from 'linq';
+import * as Enumerable from "linq";
 
 export class URCore {
-    public static Obj = { JOINTS: "", robot_current: 0, forces_tcp: [0] }
     public static PacketID: number = 0;
     public static IsMove: boolean;
     /**
@@ -167,12 +166,10 @@ export class URCore {
                                 if (base.securityStopped) {
                                     Logger.Warn("!!!SECUTIRY STOPPED!!!");
                                     URCore.IsMove = true;
-                                    return;
                                 }
                                 if (base.emergencyStopped) {
                                     Logger.Error("!!!EMERGENCY STOPPED!!!");
                                     URCore.IsMove = true;
-                                    return;
                                 }
                             }
                             break;

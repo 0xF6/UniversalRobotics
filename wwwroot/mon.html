@@ -23,6 +23,7 @@
     <script>if (typeof exports !== 'object') { exports = {}; }</script>
     <script src="./../bin/Tools/Logger.js"></script>
     <script src="./../bin/Tools/URMath.js"></script>
+    <script src="./../bin/Front/Monitor.js"></script>
     <script>if (window.module) module = window.module;</script>
 </head>
 
@@ -51,52 +52,107 @@
             <i class="tag icon"></i>
             Monitor
         </h4>
-
-
-        <table class="ui very basic collapsing celled table">
-            <thead></thead>
-            <tbody>
-                <tr>
-                    <td>
-                        Voltage
-                    </td>
-                    <td>
-                        <div id="Voltage" class="ui label">
-                            0.0 V
+        <div class="ui three column divided grid">
+            <div class="stretched row">
+                <div class="column">
+                    <div class="ui segment">
+                        <table class="ui very basic collapsing celled table">
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Voltage
+                                    </td>
+                                    <td>
+                                        <div id="Voltage" class="ui label">
+                                            0.0 V
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Power
+                                    </td>
+                                    <td>
+                                        <div id="power" class="ui red horizontal label">Off</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Program
+                                    </td>
+                                    <td>
+                                        <div id="prog_playing" class="ui red horizontal label">NONE</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Temperature
+                                    </td>
+                                    <td>
+                                        <div id="master_temp" class="ui label">
+                                            0.0
+                                            <div class="detail">&deg;C</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Mode
+                                    </td>
+                                    <td>
+                                        <div id="robotMode" class="ui red horizontal label">NOT_CONNECTED</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">
+                        1
+                    </div>
+                    <div class="ui segment">
+                        2
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">
+                        <h4>Tool Position</h4>
+                        <div class="ui circular labels">
+                            <a id="tool_p_x" class="ui label">
+                                0 &deg;
+                            </a>
+                            <a id="tool_p_y" class="ui label">
+                                0 &deg;
+                            </a>
+                            <a id="tool_p_z" class="ui label">
+                                0 &deg;
+                            </a>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Power
-                    </td>
-                    <td>
-                        <div id="power" class="ui red horizontal label">Off</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Program
-                    </td>
-                    <td>
-                        <div id="prog_playing" class="ui red horizontal label">NONE</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Temperature
-                    </td>
-                    <td>
-                        <div id="master_temp" class="ui label">
-                            0.0
-                            <div class="detail">&deg;C</div>
+                    </div>
+                    <div class="ui segment">
+                        <h4>Tool Orientation</h4>
+                        <div class="ui circular labels">
+                            <a id="tool_o_x" class="ui label">
+                                0 &deg;
+                            </a>
+                            <a id="tool_o_y" class="ui label">
+                                0 &deg;
+                            </a>
+                            <a id="tool_o_z" class="ui label">
+                                0 &deg;
+                            </a>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
+                    </div>
+                    <div class="ui segment">
+                        <a id="teach_btn" href="javascript:TeachButtonPress();" class="ui icon button">
+                            <i class="wheelchair icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <h4 style="position: fixed; bottom: 0;" class="ui horizontal divider header">
             <i class="ellipsis horizontal icon"></i>
         </h4>
@@ -108,53 +164,76 @@
 
 <script>
     const { ipcRenderer } = require('electron')
-    ipcRenderer.on("ur5", function (event, arg) {
-        console.log(arg);
+    UR5Render.BindShortcut();
+    UR5Render.On(ipcRenderer);
 
-        $("#Voltage").text(`${(+URMath.Round(arg.data.robotVoltage48V, 2)).toFixed(1)} V`);
-        $("#master_temp").html(`${(+URMath.Round(arg.data.masterTemperature, 2)).toFixed(1)}  <div class="detail">&deg;C</div>`);
+    function TeachButtonPress() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "teach" })
+    }
+    ipcRenderer.on("ur-delegate", (event, arg) => {
+        if (arg.opcode !== 31) {
+            console.log("err: invalid opcode");
+            return;
+        }
+        let isEnable = arg.IsEnable;
+        if (isEnable) {
+            $("#teach_btn").addClass("green").removeClass("red");
+        } else {
+            $("#teach_btn").addClass("red").removeClass("green");
+        }
+    });
 
-        if (arg.data.robotPowerOn) {
+    ipcRenderer.on("ur5", (event, arg) => {
+        let info = arg.data;
+        console.log(info);
+        $("#Voltage").text(`${(+URMath.Round(info.robotVoltage48V, 2)).toFixed(1)} V`);
+        $("#master_temp").html(`${(+URMath.Round(info.masterTemperature, 2)).toFixed(1)}  <div class="detail">&deg;C</div>`);
+        switch (info.robotMode) {
+            case "RUNNING":
+                $("#teach_btn").addClass("red").removeClass("green");
+                $("#robotMode").text("OK").removeClass("red").removeClass("yellow").addClass("green");
+                break;
+            case "FREEDRIVE":
+                $("#teach_btn").addClass("green").removeClass("red");
+                $("#robotMode").text("FREEDRIVE").removeClass("red").removeClass("green").addClass("yellow");
+                break;
+            default:
+                $("#teach_btn").addClass("red").removeClass("green");
+                $("#robotMode").text(info.robotMode).removeClass("yellow").removeClass("green").addClass("red");
+                break;
+        }
+
+        if (info.robotPowerOn) {
             $("#power").removeClass("red").addClass("green").text("ON");
         }
         else {
             $("#power").removeClass("green").addClass("red").text("OFF");
         }
 
-        if (arg.data.securityStopped) {
+        if (info.securityStopped) {
             $("#security_stop").removeClass("hidden");
         } else {
             $("#security_stop").addClass("hidden");
         }
 
-        if (arg.data.programRunning) {
+        if (info.programRunning) {
             $("#prog_playing").text("WORK").removeClass("red").removeClass("yellow").addClass("green");
-        } else if (arg.data.programPaused) {
+        } else if (info.programPaused) {
             $("#prog_playing").text("PAUSE").removeClass("red").removeClass("green").addClass("yellow");
         } else {
             $("#prog_playing").text("NONE").removeClass("yellow").removeClass("green").addClass("red");
         }
 
-        if (arg.data.teachButtonPressed) {
-            $("#teach_alert").removeClass("hidden");
-        } else {
-            $("#teach_alert").addClass("hidden");
-        }
 
-        //robotPowerOn
+        $("#tool_p_x").html(`${(+URMath.Round(info.ToolPosition.X * 39.3701, 2)).toFixed(2)} &deg;`)
+        $("#tool_p_y").html(`${(+URMath.Round(info.ToolPosition.Y * 39.3701, 2)).toFixed(2)} &deg;`)
+        $("#tool_p_z").html(`${(+URMath.Round(info.ToolPosition.Z * 39.3701, 2)).toFixed(2)} &deg;`)
+
+        $("#tool_o_x").html(`${(+URMath.Round(info.ToolOrientation.X * 180 / Math.PI, 2)).toFixed(2)} &deg;`)
+        $("#tool_o_y").html(`${(+URMath.Round(info.ToolOrientation.Y * 180 / Math.PI, 2)).toFixed(2)} &deg;`)
+        $("#tool_o_z").html(`${(+URMath.Round(info.ToolOrientation.Z * 180 / Math.PI, 2)).toFixed(2)} &deg;`)
+
     });
-    const { getCurrentWindow, globalShortcut } = require('electron').remote;
-    console.log(URMath);
-    var reload = () => {
-        getCurrentWindow().reload()
-    }
-
-    globalShortcut.register('F5', reload);
-    globalShortcut.register('CommandOrControl+R', reload);
-    window.addEventListener('beforeunload', () => {
-        globalShortcut.unregister('F5', reload);
-        globalShortcut.unregister('CommandOrControl+R', reload);
-    })
 </script>
 
 </html>

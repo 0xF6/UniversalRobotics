@@ -7,10 +7,12 @@ import { Logger } from './Tools/Logger';
 import { app, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
 // Import Extensions
 import "./Tools/BufferExtension";
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
+import * as Enumerable from 'linq';
 // -======================================================-
 
-let host: string = Config.UR_IP;
-let port: number = Config.UR_Port;
+const host: string = Config.UR_IP;
+const port: number = Config.UR_Port;
 
 const socket = new Socket();
 
@@ -36,7 +38,7 @@ socket.on('data', data => {
     if (!packet_robot)
         return;
     if (envs) {
-        envs.sender.send('ur5', { opcode: 15, data: packet_robot });
+        envs.sender.send('ur5', { opcode: 15, data: packet_robot.getThis() });
     }
 });
 socket.on('disconnect', () => {
@@ -73,3 +75,56 @@ ipcMain.on('asynchronous-message', (event, arg) => {
     }
 });
 
+
+const dict: Array<{ key: string, value: string }> = [];
+
+
+export class URCommand {
+    public static TeachButton(enable: boolean) {
+        let socket_cmd = new Socket();
+        socket_cmd.on("error", Logger.Error);
+        socket_cmd.on('connect', () => {
+            Logger.Log("Connected to URCore.");
+        });
+        socket_cmd.on('disconnect', () => {
+            Logger.Log("Disconnected from URCore.");
+        });
+        socket_cmd.connect(30003, host);
+        if (enable) {
+            socket_cmd.write(`set robotmode freedrive\n`);
+            Logger.Log(`Switch robot mode freedrive`);
+        } else {
+            socket_cmd.write(`set robotmode run\n`);
+            Logger.Log(`Switch robot mode run`);
+        }
+    }
+}
+
+ipcMain.on("ur-delegate", (event: Electron.Event, arg: { opcode: number, action: string }) => {
+    switch (arg.action) {
+        case "teach":
+            {
+                let enable: boolean = true;
+                Logger.Log(`Action reqest: ${arg.action}`);
+                if (!Enumerable.from(dict).any(x => x.key == "teach")) {
+                    dict.push({ key: "teach", value: "true" });
+                    enable = true;
+                } else {
+                    enable = false;
+                    let val = Enumerable.from(dict).first(x => x.key == "teach").value;
+
+                    if (val === "true") {
+                        enable = false;
+                        Enumerable.from(dict).first(x => x.key == "teach").value = "false";
+                    } else {
+                        enable = true;
+                        Enumerable.from(dict).first(x => x.key == "teach").value = "true";
+                    }
+                }
+                URCommand.TeachButton(enable);
+                event.sender.send("ur-delegate", { opcode: 31, IsEnable: enable });
+            }
+            break;
+    }
+
+});

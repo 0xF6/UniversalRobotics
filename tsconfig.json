@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es6",
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "bin",
@@ -9,7 +9,8 @@
     "experimentalDecorators": true,
     "typeRoots": [
       "node_modules/@types",
-      "node_modules/linq/*.d.ts"
+      "node_modules/linq/*.d.ts",
+      "node_modules/electron/*.d.ts"
     ]
   },
   "include": [

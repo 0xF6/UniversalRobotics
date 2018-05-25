@@ -1,3 +1,5 @@
+import { RobotMode } from "./RobotModes";
+
 export class UR5Info {
     constructor() {
         this.sector = [];
@@ -23,6 +25,7 @@ export class UR5Info {
     public programRunning: boolean;
     public programPaused: boolean;
     public mode: number;
+    public robotMode: string;
     public speedFraction: number;
     //id: 1
     public sector: Array<URJointSector>;
@@ -53,6 +56,12 @@ export class UR5Info {
     //id:8
     public teachButtonPressed: boolean;
     public teachButtonEnabled: boolean;
+
+
+    public getThis(): this {
+        this.robotMode = RobotMode[this.mode];
+        return this;
+    }
 }
 
 export class URJointSector {
