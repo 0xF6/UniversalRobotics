@@ -24,6 +24,7 @@ socket.on('connect', () => {
 });
 socket.on("error", (err) => {
     Logger.Error(err);
+    socket.connect(port, host);
 })
 socket.on('data', data => {
 

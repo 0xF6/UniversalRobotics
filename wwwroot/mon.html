@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="application-name" content="UR5">
     <meta name="description" content="UR5 Monitor">
-    <title>UR5 Monitor</title>
+    <title>UR5 Monitor v0.45</title>
     <script>
         if (typeof module === 'object') { window.module = module; module = undefined; }
     </script>
@@ -48,14 +48,13 @@
                 <p>Free movement of engines is included!</p>
             </div>
         </div>
-        <h4 class="ui horizontal divider header">
-            <i class="tag icon"></i>
-            Monitor
-        </h4>
         <div class="ui three column divided grid">
             <div class="stretched row">
                 <div class="column">
                     <div class="ui segment">
+                        <h4 class="ui horizontal divider header">
+                            Status
+                        </h4>
                         <table class="ui very basic collapsing celled table">
                             <thead></thead>
                             <tbody>
@@ -101,7 +100,7 @@
                                         Mode
                                     </td>
                                     <td>
-                                        <div id="robotMode" class="ui red horizontal label">NOT_CONNECTED</div>
+                                        <div id="robotMode" class="ui red horizontal label mini">NOT_CONNECTED</div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -110,40 +109,101 @@
                 </div>
                 <div class="column">
                     <div class="ui segment">
-                        1
+                        <h4 class="ui horizontal divider header">
+                            Joint Position
+                        </h4>
+                        <a id="joint_base" pop data-content="Joint Base" class="ui circular label">
+                            0 &deg;
+                        </a>
+                        <a id="joint_shoulder" pop data-content="Joint Shoulder" class="ui circular label">
+                            0 &deg;
+                        </a>
+                        <a id="joint_elbow" pop data-content="Joint Elbow" class="ui circular label">
+                            0 &deg;
+                        </a>
+                        <div class="ui divider"></div>
+                        <a id="joint_wrist1" pop data-content="Joint Wrist 1" class="ui circular label">
+                            0 &deg;
+                        </a>
+                        <a id="joint_wrist2" pop data-content="Joint Wrist 2" class="ui circular label">
+                            0 &deg;
+                        </a>
+                        <a id="joint_wrist3" pop data-content="Joint Wrist 3" class="ui circular label">
+                            0 &deg;
+                        </a>
                     </div>
                     <div class="ui segment">
-                        2
+                        <table class="ui very basic collapsing celled table">
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Robot Current
+                                    </td>
+                                    <td>
+                                        <div id="current_amper" class="ui label">
+                                            0.0 mA
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        IO Current
+                                    </td>
+                                    <td>
+                                        <div id="io_current_amper" class="ui label">
+                                            0.0 mA
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tool Current
+                                    </td>
+                                    <td>
+                                        <div id="tool_current_amper" class="ui label">
+                                            0.0 mA
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="column">
                     <div class="ui segment">
-                        <h4>Tool Position</h4>
+                        <h4 class="ui horizontal divider header">
+                            Tool Position
+                        </h4>
                         <div class="ui circular labels">
-                            <a id="tool_p_x" class="ui label">
+                            <a id="tool_p_x" pop data-content="X" class="ui label">
                                 0 &deg;
                             </a>
-                            <a id="tool_p_y" class="ui label">
+                            <a id="tool_p_y" pop data-content="Y" class="ui label">
                                 0 &deg;
                             </a>
-                            <a id="tool_p_z" class="ui label">
+                            <a id="tool_p_z" pop data-content="Z" class="ui label">
                                 0 &deg;
                             </a>
                         </div>
+                        <br>
                     </div>
                     <div class="ui segment">
-                        <h4>Tool Orientation</h4>
+                        <h4 class="ui horizontal divider header">
+                            Tool Orientation
+                        </h4>
                         <div class="ui circular labels">
-                            <a id="tool_o_x" class="ui label">
+                            <a id="tool_o_x" pop data-content="X" class="ui label">
                                 0 &deg;
                             </a>
-                            <a id="tool_o_y" class="ui label">
+                            <a id="tool_o_y" pop data-content="Y" class="ui label">
                                 0 &deg;
                             </a>
-                            <a id="tool_o_z" class="ui label">
+                            <a id="tool_o_z" pop data-content="Z" class="ui label">
                                 0 &deg;
                             </a>
                         </div>
+                        <br>
                     </div>
                     <div class="ui segment">
                         <a id="teach_btn" href="javascript:TeachButtonPress();" class="ui icon button">
@@ -163,6 +223,7 @@
 
 
 <script>
+    $('[pop]').popup();
     const { ipcRenderer } = require('electron')
     UR5Render.BindShortcut();
     UR5Render.On(ipcRenderer);
@@ -188,6 +249,20 @@
         console.log(info);
         $("#Voltage").text(`${(+URMath.Round(info.robotVoltage48V, 2)).toFixed(1)} V`);
         $("#master_temp").html(`${(+URMath.Round(info.masterTemperature, 2)).toFixed(1)}  <div class="detail">&deg;C</div>`);
+
+        $("#current_amper").text(`${(+URMath.Round(info.robotCurrent, 2)).toFixed(2)} A`);
+        $("#io_current_amper").text(`${+URMath.Round(info.masterIOCurrent * 1000, 1)} mA`);
+        $("#tool_current_amper").text(`${+URMath.Round(info.toolCurrent * 1000, 1)} mA`);
+
+        $("#joint_base").html(`${info.sector[0].DegreePosition} &deg;`);
+        $("#joint_shoulder").html(`${info.sector[1].DegreePosition} &deg;`);
+        $("#joint_elbow").html(`${info.sector[2].DegreePosition} &deg;`);
+
+        $("#joint_wrist1").html(`${info.sector[3].DegreePosition} &deg;`);
+        $("#joint_wrist2").html(`${info.sector[4].DegreePosition} &deg;`);
+        $("#joint_wrist3").html(`${info.sector[5].DegreePosition} &deg;`);
+
+
         switch (info.robotMode) {
             case "RUNNING":
                 $("#teach_btn").addClass("red").removeClass("green");
@@ -225,9 +300,9 @@
         }
 
 
-        $("#tool_p_x").html(`${(+URMath.Round(info.ToolPosition.X * 39.3701, 2)).toFixed(2)} &deg;`)
-        $("#tool_p_y").html(`${(+URMath.Round(info.ToolPosition.Y * 39.3701, 2)).toFixed(2)} &deg;`)
-        $("#tool_p_z").html(`${(+URMath.Round(info.ToolPosition.Z * 39.3701, 2)).toFixed(2)} &deg;`)
+        $("#tool_p_x").html(`${(+URMath.Round(info.ToolPosition.X * 39.3701, 2)).toFixed(2)} in`)
+        $("#tool_p_y").html(`${(+URMath.Round(info.ToolPosition.Y * 39.3701, 2)).toFixed(2)} in`)
+        $("#tool_p_z").html(`${(+URMath.Round(info.ToolPosition.Z * 39.3701, 2)).toFixed(2)} in`)
 
         $("#tool_o_x").html(`${(+URMath.Round(info.ToolOrientation.X * 180 / Math.PI, 2)).toFixed(2)} &deg;`)
         $("#tool_o_y").html(`${(+URMath.Round(info.ToolOrientation.Y * 180 / Math.PI, 2)).toFixed(2)} &deg;`)

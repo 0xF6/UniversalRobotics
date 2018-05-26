@@ -50,6 +50,6 @@ export class URMath {
             }
             finalNumber = beforePoint + '.' + afterPoint;
         }
-        return finalNumber.replace(/0+$/, '')
+        return +`${finalNumber}`.replace(/0+$/, '');
     }
 }

@@ -75,7 +75,7 @@ export class URCore {
                                 while (true) {
                                     if (code >= 6)
                                         break;
-                                    base.sector[code].JointPosition = packet.readDoubleBE(offset);
+                                    base.sector[code].SetJointPosition(packet.readDoubleBE(offset));
                                     offset += 8;
                                     base.sector[code].JointTarger = packet.readDoubleBE(offset);
                                     offset += 8;

@@ -1,4 +1,5 @@
 import { RobotMode } from "./RobotModes";
+import { URMath } from "../Tools/URMath";
 
 export class UR5Info {
     constructor() {
@@ -76,10 +77,14 @@ export class URJointSector {
     public Voltage: number;
     public JointCurrent: number;
     public JointTarger: number;
-    public JointPosition: number;
+    public JointPosition: number = 0;
+    public DegreePosition: number = 0;
     public JointSpeed: number;
 
-
+    public SetJointPosition(value: number): void {
+        this.JointPosition = value;
+        this.DegreePosition = +(URMath.Round((this.JointPosition * 180 / Math.PI), 2));
+    }
     //id: 7 
     public force_mode_frame: number;
 }
