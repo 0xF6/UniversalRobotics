@@ -1,6 +1,6 @@
 {
   "name": "ur5-universal-robotics",
-  "version": "v0.46-beta",
+  "version": "0.46-beta",
   "description": "Platform for manage UniversalRobotics UR5",
   "main": "bin/app.js",
   "author": "Yuuki Wesp",
@@ -42,7 +42,8 @@
     "win": "tsc --declaration && electron bin/app.js",
     "win-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=win32 --arch=x64 --out=./Release --overwrite --ignore=Release",
     "unix-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=linux --arch=x64 --out=./Release --overwrite --ignore=Release",
-    "darwin-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=darwin --arch=x64 --out=./Release --overwrite --ignore=Release"
+    "darwin-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=darwin --arch=x64 --out=./Release --overwrite --ignore=Release",
+    "build-all": "yarn win-build && yarn unix-build && yarn darwin-build"
   },
   "repository": {
     "type": "git",

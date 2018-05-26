@@ -36,6 +36,8 @@ export class App {
             App.Port = jconf.Port;
             App.IsDebug = jconf.Debug;
             App.Connect();
+            if (App.IsDebug)
+                ElectronCore.MainWindow.webContents.openDevTools();
         } else {
             Logger.Warn("Configuration file is not found. Need install App.");
             App.NeedInstall = true;
@@ -100,8 +102,6 @@ export class ElectronCore {
         ElectronCore.MainWindow.loadURL(`file://${__dirname}/../wwwroot/index.html`);
         ElectronCore.MainWindow.setMenu(null);
         ElectronCore.MainWindow.setResizable(false);
-        //if (App.IsDebug)
-        ElectronCore.MainWindow.webContents.openDevTools();
         ElectronCore.MainWindow.on("closed", ElectronCore.OnClose);
         app.on('window-all-closed', ElectronCore.OnAllWindowsClosed);
 
