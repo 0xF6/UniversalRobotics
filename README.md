@@ -1,5 +1,12 @@
 # 🌀 UR5 ⚙️ - TypeScript Platform 🚀
 
+
+![image](https://user-images.githubusercontent.com/13326808/40575999-1af1de40-60f8-11e8-81a4-1e0f54eec37a.png)
+
+    
+
+
+
 ### Dependences 🌜
 1. Yarn 1.6 or above
 2. NodeJS 9.0 or above
@@ -17,8 +24,19 @@
 2. Copy class for `config.example.ts` to `config.ts`
 3. Set `IP` and `Port` Robot
 4. `yarn build`
-5. `yarn start`
+5. `yarn win`
 6. You are perfect! 💞
+
+
+#### Ubuntu 16.04 xenial
+0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
+1. `sudo apt-get install libnss3`
+2. `sudo apt-get install libgconf-2-4`
+3. Create `config.ts`
+4. Copy class for `config.example.ts` to `config.ts`
+5. Set `IP` and `Port` Robot
+6. `yarn win`
+7. You are nice! 💞
 
 ### Run test ☃️
 
