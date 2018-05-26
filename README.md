@@ -21,7 +21,7 @@
 6. You are perfect! 💞
 
 
-#### Ubuntu
+#### Ubuntu 16.04 xenial
 0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
 1. `sudo apt-get install libnss3`
 2. `sudo apt-get install libgconf-2-4`
