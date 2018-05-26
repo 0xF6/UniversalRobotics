@@ -1,7 +1,8 @@
 # 🌀 UR5 ⚙️ - Platform 🚀
 
 
-![image](https://user-images.githubusercontent.com/13326808/40575999-1af1de40-60f8-11e8-81a4-1e0f54eec37a.png)
+![image](https://user-images.githubusercontent.com/13326808/40578154-f370abd8-6117-11e8-885b-bb8f3f4ad396.png)
+
 
     
 
