@@ -61,7 +61,6 @@ app.on("ready", () => {
         socket.end();
     });
 });
-
 app.on('window-all-closed', () => {
     if (process.platform != 'darwin') {
         app.quit();
@@ -78,7 +77,6 @@ ipcMain.on('asynchronous-message', (event, arg) => {
 
 
 const dict: Array<{ key: string, value: string }> = [];
-
 
 export class URCommand {
     public static TeachButton(enable: boolean) {

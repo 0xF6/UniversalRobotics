@@ -1,11 +1,25 @@
 {
-  "name": "PlatformR",
-  "version": "1.0.0",
+  "name": "ur5",
+  "version": "v0.45",
   "description": "Platform for manage Universal Robotick",
   "main": "bin/app.js",
   "author": "Yuuki Wesp",
   "license": "MIT",
   "private": true,
+  "keywords": [
+    "universalrobotics",
+    "ur5-robot",
+    "ur5-platform",
+    "typescript",
+    "polyscope",
+    "robot",
+    "ur5",
+    "robot-modes"
+  ],
+  "bugs": {
+    "url": "https://github.com/0xF6/UniversalRobotics/issues"
+  },
+  "homepage": "https://github.com/0xF6/UniversalRobotics#readme",
   "dependencies": {
     "@types/electron": "^1.6.10",
     "@types/jquery": "^3.3.2",
@@ -17,7 +31,6 @@
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
     "node-int64": "^0.4.0",
-    "serialport": "^6.2.0",
     "sleep-promise": "^6.0.0",
     "typescript": "^2.8.3"
   },
@@ -26,6 +39,12 @@
     "test": "@echo off && echo test not found",
     "start": "tsc --declaration && node bin/app.js",
     "win": "tsc --declaration && electron bin/app.js",
-    "win-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=win32 --arch=x64 --out=./Release --overwrite --ignore=Release"
+    "win-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=win32 --arch=x64 --out=./Release --overwrite --ignore=Release",
+    "unix-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=linux --arch=x64 --out=./Release --overwrite --ignore=Release",
+    "darwin-build": "tsc --declaration && electron-packager . UR5 --ignore=node_modules/electron* --platform=darwin --arch=x64 --out=./Release --overwrite --ignore=Release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xF6/UniversalRobotics.git"
   }
 }
