@@ -1,7 +1,11 @@
-# 🌀 UR5 ⚙️ - TypeScript Platform 🚀
+# 🌀 UR5 ⚙️ - Platform 🚀
 
 
-![image](https://user-images.githubusercontent.com/13326808/40575999-1af1de40-60f8-11e8-81a4-1e0f54eec37a.png)
+    
+![image](https://david-dm.org/0xF6/UniversalRobotics.svg)
+
+![image](https://user-images.githubusercontent.com/13326808/40578154-f370abd8-6117-11e8-885b-bb8f3f4ad396.png)
+
 
     
 
@@ -37,6 +41,16 @@
 5. Set `IP` and `Port` Robot
 6. `yarn win`
 7. You are nice! 💞
+
+#### Arch Linux
+
+0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
+1. `sudo pacman -S gconf`
+2. Create `config.ts`
+3. Copy class for `config.example.ts` to `config.ts`
+4. Set `IP` and `Port` Robot
+5. `yarn win`
+6. You are great! 💞
 
 ### Run test ☃️
 
