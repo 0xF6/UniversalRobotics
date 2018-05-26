@@ -1,4 +1,4 @@
-# 🌀 UR5 ⚙️ Platform 🚀 v0.46 Beta
+# 🌀 UR5 Platform 🚀 v0.46 Beta
 
 
     
