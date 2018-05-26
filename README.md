@@ -15,7 +15,6 @@
 1. Yarn 1.6 or above
 2. NodeJS 9.0 or above
 3. TypeScript 2.6 or above (in global)
-4. Mocha 5.1 or above (in global)
 
 
 ### Hardware 🔥
@@ -24,40 +23,27 @@
 2. URController 1.8
 
 ### Install 💦 
-1. Create `config.ts`
-2. Copy class for `config.example.ts` to `config.ts`
-3. Set `IP` and `Port` Robot
-4. `yarn build`
-5. `yarn win`
-6. You are perfect! 💞
+1. Complete setup, set `IP` and `Port` Robot
+2. `yarn build`
+3. `yarn win`
+4. You are perfect! 💞
 
 
 #### Ubuntu 16.04 xenial
 0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
 1. `sudo apt-get install libnss3`
 2. `sudo apt-get install libgconf-2-4`
-3. Create `config.ts`
-4. Copy class for `config.example.ts` to `config.ts`
-5. Set `IP` and `Port` Robot
-6. `yarn win`
-7. You are nice! 💞
+3. Complete setup, set `IP` and `Port` Robot
+4. `yarn win`
+5. You are nice! 💞
 
 #### Arch Linux
 
 0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
 1. `sudo pacman -S gconf`
-2. Create `config.ts`
-3. Copy class for `config.example.ts` to `config.ts`
-4. Set `IP` and `Port` Robot
-5. `yarn win`
-6. You are great! 💞
-
-### Run test ☃️
-
-1. `yarn build`
-2. `yarn test`
-3. You are wonderful! ✨
-
+2. `yarn win`
+3. Complete setup, set `IP` and `Port` Robot
+4. You are great! 💞
 
 
 ### Informations 🕸
