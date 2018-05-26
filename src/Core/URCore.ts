@@ -1,4 +1,3 @@
-import { URBytePoint } from "./URBytePoint";
 import { Logger } from "../Tools/Logger";
 import { URMath } from "../Tools/URMath";
 import { UR5Info } from "./UR5Info";
@@ -30,8 +29,7 @@ export class URCore {
                 break;
             case 5:
                 Logger.Log("Modbus error");
-                // TODO
-                break;
+                return undefined;
             case 16: // normal packet
                 while (offset < size_packet) {
 

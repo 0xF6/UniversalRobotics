@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="application-name" content="UR5">
+    <meta name="description" content="UR5 Monitor">
+    <title>UR5 Monitor v0.46</title>
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
+    <link rel="shortcut icon" href="./images/robot-icon-29.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <script src="./../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.30.1/js/jquery.tablesorter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js"></script>
+    <script>if (typeof exports !== 'object') { exports = {}; }</script>
+    <script src="./../bin/Tools/Logger.js"></script>
+    <script src="./../bin/Tools/URMath.js"></script>
+    <script src="./../bin/Front/Monitor.js"></script>
+    <script>if (window.module) module = window.module;</script>
+</head>
+
+<body>
+    <br>
+    <div id="body_container" class="ui container">
+        <form class="ui form">
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="ui three column centered grid">
+                <div class="stretched row">
+                    <div class="column">
+                        <div class="ui segment">
+                            <div class="required field">
+                                <label>IP</label>
+                                <input id="_ip" type="text" name="ip" placeholder="IP">
+                            </div>
+                            <div class="required field">
+                                <label>Port</label>
+                                <input id="_port" type="text" name="port" value="30002" placeholder="Port">
+                            </div>
+                        </div>
+                        <button type="submit" class="ui animated button submit">
+                            <div class="visible content">Next</div>
+                            <div class="hidden content">
+                                <i class="right arrow icon"></i>
+                            </div>
+                        </button>
+                        <div class="ui error message"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+
+
+<script>
+    UR5Render.BindShortcut();
+    $('[pop]').popup();
+    const { ipcRenderer } = require('electron');
+    $(".ui.form").submit(function (event) {
+        console.log("stop");
+        /*IP: string;
+            Port: number;
+            Debug: boolean;*/
+        event.preventDefault();
+        ipcRenderer.send("create-config", { opcode: 11, data: { IP: $("#_ip").val(), Port: +$("#_port").val(), Debug: false } });
+        $(".ui.form").addClass("loading");
+        ipcRenderer.send("status", { opcode: 14, data: { isComplete: true } });
+    });
+    $('.ui.form')
+        .form({
+            fields: {
+                ip: {
+                    identifier: 'ip',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter robot IP'
+                        },
+                        {
+                            type: 'regExp',
+                            value: /(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?\.25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/i,
+                            prompt: 'Please enter valid robot IP'
+                        }
+                    ]
+                },
+                port: {
+                    identifier: 'port',
+                    rules: [{
+                        type: 'empty',
+                        prompt: 'Please enter robot Port'
+                    }]
+                }
+            }
+        });
+</script>
+
+</html>

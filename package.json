@@ -1,11 +1,11 @@
 {
-  "name": "ur5",
-  "version": "v0.45",
-  "description": "Platform for manage Universal Robotick",
+  "name": "ur5-universal-robotics",
+  "version": "v0.46-beta",
+  "description": "Platform for manage UniversalRobotics UR5",
   "main": "bin/app.js",
   "author": "Yuuki Wesp",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "keywords": [
     "universalrobotics",
     "ur5-robot",
@@ -30,6 +30,7 @@
     "jquery": "^3.3.1",
     "linq": "^3.1.0",
     "mathjs": "^4.2.2",
+    "node-file-exists": "^1.1.0",
     "node-int64": "^0.4.0",
     "sleep-promise": "^6.0.0",
     "typescript": "^2.8.3"

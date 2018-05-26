@@ -207,6 +207,6 @@
     const { ipcRenderer } = require('electron')
 
     setTimeout(() => {
-        ipcRenderer.send('asynchronous-message', { opcode: 14, data: { isComplete: true } })
+        ipcRenderer.send('status', { opcode: 14, data: { isComplete: true } })
     }, 4000);
 </script>
