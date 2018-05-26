@@ -7,7 +7,6 @@ import { Logger } from './Tools/Logger';
 import { app, BrowserWindow, ipcMain, ipcRenderer } from 'electron';
 // Import Extensions
 import "./Tools/BufferExtension";
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
 import * as Enumerable from 'linq';
 // -======================================================-
 
@@ -55,7 +54,8 @@ app.on("ready", () => {
     win.loadURL(`file://${__dirname}/../wwwroot/index.html`);
     win.setMenu(null);
     win.setResizable(false);
-    win.webContents.openDevTools();
+    if (Config.Debug)
+        win.webContents.openDevTools();
     win.on("closed", () => {
         win = null;
         socket.end();
