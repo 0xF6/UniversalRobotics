@@ -69,10 +69,6 @@
     $('[pop]').popup();
     const { ipcRenderer } = require('electron');
     $(".ui.form").submit(function (event) {
-        console.log("stop");
-        /*IP: string;
-            Port: number;
-            Debug: boolean;*/
         event.preventDefault();
         ipcRenderer.send("create-config", { opcode: 11, data: { IP: $("#_ip").val(), Port: +$("#_port").val(), Debug: false } });
         $(".ui.form").addClass("loading");
