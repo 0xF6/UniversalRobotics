@@ -71,6 +71,9 @@
 
 Send via socket ASCII text command.
 
+
+<details>
+        
 1. `load <program.urp>` - Load the specified program. Returns when loading has completed.
 2. `play` - Starts program, if any program is loaded and robot is ready. Returns when the program execution has been started.
 3. `stop` - Stops running program and returns immediately.
@@ -132,3 +135,6 @@ none ( or send setUserRole) = All buttons enabled, "Expert Mode" is available (i
 locked = All buttons disabled and "Expert Mode" cannot be activated
 
 ```
+</details>
+
+
