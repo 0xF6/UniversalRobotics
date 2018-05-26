@@ -17,8 +17,19 @@
 2. Copy class for `config.example.ts` to `config.ts`
 3. Set `IP` and `Port` Robot
 4. `yarn build`
-5. `yarn start`
+5. `yarn win`
 6. You are perfect! 💞
+
+
+#### Ubuntu
+0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
+1. `sudo apt-get install libnss3`
+2. `sudo apt-get install libgconf-2-4`
+3. Create `config.ts`
+4. Copy class for `config.example.ts` to `config.ts`
+5. Set `IP` and `Port` Robot
+6. `yarn win`
+7. You are nice! 💞
 
 ### Run test ☃️
 
