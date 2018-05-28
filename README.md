@@ -49,7 +49,7 @@
 ### Informations 🕸
 
 #### Ports:
-1. 30002 - Every 300 ms comes information about the robot, its state, information about the controller
+1. 30002 - Every 125 ms comes information about the robot, its state, information about the controller
 2. 30001 - Modbus port
 3. 29999 - Polyscope dashboard port, command port
 
