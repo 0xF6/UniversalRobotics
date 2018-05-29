@@ -1,6 +1,6 @@
 {
   "name": "ur5",
-  "version": "0.46.0-beta",
+  "version": "0.47.0-beta",
   "description": "Platform for manage UniversalRobotics UR5",
   "main": "bin/app.js",
   "author": "Yuuki Wesp",

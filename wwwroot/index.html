@@ -205,8 +205,7 @@
 
 <script>
     const { ipcRenderer } = require('electron')
-
     setTimeout(() => {
         ipcRenderer.send('status', { opcode: 14, data: { isComplete: true } })
-    }, 4000);
+    }, 5000);
 </script>

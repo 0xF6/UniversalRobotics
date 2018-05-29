@@ -164,6 +164,15 @@ export class ElectronCore {
                     event.sender.send("ur-delegate", { opcode: 31, IsEnable: enable });
                 }
                 break;
+            case "poweron":
+                URCommand.URPowerOn();
+                break;
+            case "brake-release":
+                URCommand.URPowerOn(true);
+                break;
+            case "start_program":
+                URCommand.RunCircle();
+                break;
         }
     }
 
@@ -171,10 +180,7 @@ export class ElectronCore {
 
     private static dict: Array<{ key: string, value: string }> = [];
 }
-
-
 app.on("ready", ElectronCore.OnReady);
-
 
 export class URCommand {
     public static TeachButton(enable: boolean) {
@@ -194,5 +200,28 @@ export class URCommand {
             socket_cmd.write(`set robotmode run\n`);
             Logger.Log(`Switch robot mode run`);
         }
+    }
+
+    public static URPowerOn(brakeRelease?: boolean) {
+        let sock = URCommand.getSocket();
+
+        sock.write("power on\n");
+        Logger.Log(`Robot power on.`);
+        if (brakeRelease) {
+            setTimeout(() => { sock.write("power on\n"); Logger.Log(`Robot brake release.`); }, 2000);
+        }
+    }
+
+    private static getSocket(port: number = 30003): Socket {
+        let socket_cmd = new Socket();
+        socket_cmd.connect(30003, App.IP);
+        return socket_cmd;
+    }
+
+
+    public static RunCircle() {
+        let sock = URCommand.getSocket(29999);
+        sock.write('load "R8/circle.urp"\n');
+        Logger.Log(`Start program. 'circle.urp'`);
     }
 }

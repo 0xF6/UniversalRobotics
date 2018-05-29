@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="application-name" content="UR5">
     <meta name="description" content="UR5 Monitor">
-    <title>UR5 Monitor v0.45</title>
+    <title>UR5 Monitor v0.47 Beta</title>
     <script>
         if (typeof module === 'object') { window.module = module; module = undefined; }
     </script>
@@ -48,6 +48,9 @@
                 <p>Free movement of engines is included!</p>
             </div>
         </div>
+        <h4 class="ui horizontal divider header">
+            UR5 Dashboard
+        </h4>
         <div class="ui three column divided grid">
             <div class="stretched row">
                 <div class="column">
@@ -95,18 +98,28 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        Mode
-                                    </td>
-                                    <td>
-                                        <div id="robotMode" class="ui red horizontal label mini">NOT_CONNECTED</div>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
+                        <h4 class="ui horizontal divider header">
+                            Mode
+                        </h4>
+                        <br>
+                        <div class="ui two column centered grid">
+                            <div id="robotMode" class="ui red horizontal label large">NOT_CONNECTED</div>
+                        </div>
+                        <br>
+                        <div class="ui divider"></div>
                     </div>
                 </div>
+                <!--
+                                <tr>
+                                    <td>
+                                        Motor Mode
+                                    </td>
+                                    <td>
+                                        <div id="motorMode" class="ui red horizontal label large">NOT_RESPONDING (6)</div>
+                                    </td>
+                                </tr>-->
                 <div class="column">
                     <div class="ui segment">
                         <h4 class="ui horizontal divider header">
@@ -133,6 +146,9 @@
                         </a>
                     </div>
                     <div class="ui segment">
+                        <h4 class="ui horizontal divider header">
+                            Amperage
+                        </h4>
                         <table class="ui very basic collapsing celled table">
                             <thead></thead>
                             <tbody>
@@ -186,7 +202,6 @@
                                 0 &deg;
                             </a>
                         </div>
-                        <br>
                     </div>
                     <div class="ui segment">
                         <h4 class="ui horizontal divider header">
@@ -203,17 +218,26 @@
                                 0 &deg;
                             </a>
                         </div>
-                        <br>
                     </div>
                     <div class="ui segment">
-                        <a id="teach_btn" href="javascript:TeachButtonPress();" class="ui icon button">
+                        <h4 class="ui horizontal divider header">
+                            Manage
+                        </h4>
+                        <a id="teach_btn" href="javascript:TeachButtonPress();" pop data-content="Freedrive" class="ui icon button">
                             <i class="wheelchair icon"></i>
+                        </a>
+                        <a id="power_btn" href="javascript:PowerOn()" pop data-content="Power" class="ui blue icon button">
+                            <i class="power icon"></i>
+                        </a>
+                        <a href="javascript:ProgramRun()" pop data-content="Run program" class="ui yellow icon button">
+                            <i class="assistive listening systems icon"></i>
                         </a>
                     </div>
                 </div>
             </div>
+
         </div>
-        <h4 style="position: fixed; bottom: 0;" class="ui horizontal divider header">
+        <h4 class="ui horizontal divider header">
             <i class="ellipsis horizontal icon"></i>
         </h4>
         <br>
@@ -230,6 +254,12 @@
 
     function TeachButtonPress() {
         ipcRenderer.send("ur-delegate", { opcode: 29, action: "teach" })
+    }
+    function PowerOn() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "brake-release" })
+    }
+    function ProgramRun() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "start_program" })
     }
     ipcRenderer.on("ur-delegate", (event, arg) => {
         if (arg.opcode !== 31) {
@@ -272,9 +302,25 @@
                 $("#teach_btn").addClass("green").removeClass("red");
                 $("#robotMode").text("FREEDRIVE").removeClass("red").removeClass("green").addClass("yellow");
                 break;
+            case "EMERGENCY_STOPPED":
+                $("#teach_btn").addClass("red").removeClass("green");
+                $("#robotMode").text("EMERGENCY STOPPED").removeClass("yellow").removeClass("green").addClass("red");
+                break;
+            case "INITIALIZING":
+                $("#teach_btn").addClass("red").removeClass("green");
+                $("#robotMode").text("INITIALIZING").removeClass("red").removeClass("green").addClass("yellow");
+                break;
             default:
                 $("#teach_btn").addClass("red").removeClass("green");
-                $("#robotMode").text(info.robotMode).removeClass("yellow").removeClass("green").addClass("red");
+                $("#robotMode").text(`${info.robotMode}`.replace("_", " ")).removeClass("yellow").removeClass("green").addClass("red");
+                break;
+        }
+        switch (info.robotMode) {
+            case "NO_POWER":
+                $("#power_btn").removeClass("disabled");
+                break;
+            default:
+                $("#power_btn").addClass("disabled");
                 break;
         }
 
@@ -284,13 +330,6 @@
         else {
             $("#power").removeClass("green").addClass("red").text("OFF");
         }
-
-        if (info.securityStopped) {
-            $("#security_stop").removeClass("hidden");
-        } else {
-            $("#security_stop").addClass("hidden");
-        }
-
         if (info.programRunning) {
             $("#prog_playing").text("WORK").removeClass("red").removeClass("yellow").addClass("green");
         } else if (info.programPaused) {
