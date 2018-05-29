@@ -23,9 +23,9 @@
 2. URController 1.8
 
 ### Install 💦 
-1. Complete setup, set `IP` and `Port` Robot
-2. `yarn build`
-3. `yarn win`
+1. `yarn build`
+2. `yarn win`
+3. Complete setup, set `IP` and `Port` Robot
 4. You are perfect! 💞
 
 
@@ -33,8 +33,8 @@
 0. `git clone https://github.com/0xF6/UniversalRobotics.git | cd UniversalRobotics`
 1. `sudo apt-get install libnss3`
 2. `sudo apt-get install libgconf-2-4`
-3. Complete setup, set `IP` and `Port` Robot
-4. `yarn win`
+3. `yarn win`
+4. Complete setup, set `IP` and `Port` Robot
 5. You are nice! 💞
 
 #### Arch Linux
@@ -49,7 +49,7 @@
 ### Informations 🕸
 
 #### Ports:
-1. 30002 - Every 300 ms comes information about the robot, its state, information about the controller
+1. 30002 - Every 125 ms comes information about the robot, its state, information about the controller
 2. 30001 - Modbus port
 3. 29999 - Polyscope dashboard port, command port
 
