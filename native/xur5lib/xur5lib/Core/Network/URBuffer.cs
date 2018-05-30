@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
 
     public class URBuffer
     {
@@ -46,7 +47,7 @@
         {
             byte[] @Byte = new byte[sizeof(short)];
             nMStream.Read(@Byte, offset: 0, count: sizeof(short));
-            return BitConverter.ToInt16(@Byte, startIndex: 0);
+            return BitConverter.ToInt16(@Byte.Reverse().ToArray(), startIndex: 0);
         }
         byte IURBufferReader.readByte()
         {
@@ -58,25 +59,25 @@
         {
             byte[] @Byte = new byte[sizeof(float)];
             nMStream.Read(@Byte, offset: 0, count: sizeof(float));
-            return BitConverter.ToSingle(@Byte, startIndex: 0);
+            return BitConverter.ToSingle(@Byte.Reverse().ToArray(), startIndex: 0);
         }
         int IURBufferReader.readInt32()
         {
             byte[] @Byte = new byte[sizeof(int)];
             nMStream.Read(@Byte, offset: 0, count: sizeof(int));
-            return BitConverter.ToInt32(@Byte, startIndex: 0);
+            return BitConverter.ToInt32(@Byte.Reverse().ToArray(), startIndex: 0);
         }
         long IURBufferReader.readInt64()
         {
             byte[] @Byte = new byte[sizeof(long)];
             nMStream.Read(@Byte, offset: 0, count: sizeof(long));
-            return BitConverter.ToInt64(@Byte, startIndex: 0);
+            return BitConverter.ToInt64(@Byte.Reverse().ToArray(), startIndex: 0);
         }
         double IURBufferReader.readDouble()
         {
             byte[] @Byte = new byte[sizeof(double)];
             nMStream.Read(@Byte, offset: 0, count: sizeof(double));
-            return BitConverter.ToDouble(@Byte, startIndex: 0);
+            return BitConverter.ToDouble(@Byte.Reverse().ToArray(), startIndex: 0);
         }
         IURBufferReader IURBufferReader.Clone()
         {

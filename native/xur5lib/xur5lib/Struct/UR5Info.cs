@@ -23,20 +23,40 @@
         public ToolTransform ToolPosition = new ToolTransform();
         public ToolTransform ToolOrientation = new ToolTransform() { IsRotate = true };
 
-        public List<Joint> Joints = new List<Joint>(6);
+        public List<Joint> Joints = new List<Joint>(6)
+        {
+            new Joint(JointType.Base), 
+            new Joint(JointType.Shoulder),
+            new Joint(JointType.Elbow), 
+            new Joint(JointType.Wrist1), 
+            new Joint(JointType.Wrist2), 
+            new Joint(JointType.Wrist3)
+        };
 
 
     }
-
+    public enum JointType
+    {
+        Base,
+        Shoulder,
+        Elbow,
+        Wrist1,
+        Wrist2,
+        Wrist3
+    }
     public class Joint
     {
-        public int CodeID { get; set; }
+        public Joint(JointType type)
+        {
+            CodeID = type;
+        }
+        public JointType CodeID { get; set; }
 
         public int Mode;
-        public double MicroTemperature;
-        public double MotorTemperature;
-        public double Voltage;
-        public double JointCurrent;
+        public float MicroTemperature;
+        public float MotorTemperature;
+        public float Voltage;
+        public float JointCurrent;
         public double JointTarger;
         public double JointPosition;
         public float DegreePosition => (float)Math.Round(JointPosition * 180 / Math.PI, 2);

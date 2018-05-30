@@ -40,4 +40,40 @@ export class URDriver {
             });
         });
     }
+    public static RunProgram(name: string) {
+        let res = edge.func({
+            assemblyFile: './bin/Native/net45/xur5lib.dll',
+            typeName: 'UR5.Core.NodeEntryPoint',
+            methodName: 'RunProgram'
+        });
+        return new Promise(function (resolve, reject) {
+            res({ name }, function (error, result: boolean) {
+                if (error) {
+                    reject(error);
+                    Logger.Warn(error);
+                } else {
+                    Logger.Log(`Success call API URDriver.RunProgram(); returned: ${result}`);
+                    resolve(result);
+                }
+            });
+        });
+    }
+    public static StopProgram(name: string) {
+        let res = edge.func({
+            assemblyFile: './bin/Native/net45/xur5lib.dll',
+            typeName: 'UR5.Core.NodeEntryPoint',
+            methodName: 'StopProgram'
+        });
+        return new Promise(function (resolve, reject) {
+            res({ name }, function (error, result: boolean) {
+                if (error) {
+                    reject(error);
+                    Logger.Warn(error);
+                } else {
+                    Logger.Log(`Success call API URDriver.RunProgram(); returned: ${result}`);
+                    resolve(result);
+                }
+            });
+        });
+    }
 }
