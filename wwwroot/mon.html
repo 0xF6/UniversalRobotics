@@ -229,7 +229,13 @@
                         <a id="power_btn" href="javascript:PowerOn()" pop data-content="Power" class="ui blue icon button">
                             <i class="power icon"></i>
                         </a>
-                        <a href="javascript:ProgramRun()" pop data-content="Run program" class="ui yellow icon button">
+                        <a id="home_btn" href="javascript:GotHome()" pop data-content="Got home" class="ui green icon button">
+                            <i class="assistive listening systems icon"></i>
+                        </a>
+                        <a id="pidor_btn" href="javascript:GotPidor()" pop data-content="Got pidor" class="ui purple icon button">
+                            <i class="assistive listening systems icon"></i>
+                        </a>
+                        <a id="nya_btn" href="javascript:GotNyaPos()" pop data-content="Got nya" class="ui pink icon button">
                             <i class="assistive listening systems icon"></i>
                         </a>
                     </div>
@@ -258,8 +264,20 @@
     function PowerOn() {
         ipcRenderer.send("ur-delegate", { opcode: 29, action: "brake-release" })
     }
-    function ProgramRun() {
-        ipcRenderer.send("ur-delegate", { opcode: 29, action: "start_program" })
+    function GotHome() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "home-pos" });
+        $("#home_btn").addClass("disabled");
+        setTimeout(() => { $("#home_btn").removeClass("disabled"); }, 3000);
+    }
+    function GotPidor() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "pidor" });
+        $("#pidor_btn").addClass("disabled");
+        setTimeout(() => { $("#pidor_btn").removeClass("disabled"); }, 3000);
+    }
+    function GotNyaPos() {
+        ipcRenderer.send("ur-delegate", { opcode: 29, action: "nya" });
+        $("#nya_btn").addClass("disabled");
+        setTimeout(() => { $("#nya_btn").removeClass("disabled"); }, 3000);
     }
     ipcRenderer.on("ur-delegate", (event, arg) => {
         if (arg.opcode !== 31) {

@@ -58,7 +58,9 @@ export class UR5Info {
     public teachButtonPressed: boolean;
     public teachButtonEnabled: boolean;
 
-
+    public getPositionString(): string {
+        return `[${this.sector[0].JointPosition}, ${this.sector[1].JointPosition}, ${this.sector[2].JointPosition}, ${this.sector[3].JointPosition}, ${this.sector[4].JointPosition}, ${this.sector[5].JointPosition}]`
+    }
     public getThis(): this {
         this.robotMode = RobotMode[this.mode];
         return this;

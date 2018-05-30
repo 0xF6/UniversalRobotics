@@ -183,6 +183,17 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+edge-cs@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/edge-cs/-/edge-cs-1.2.1.tgz#bd1a9ecdb94ef0ed40c894582046749e57045e5a"
+
+edge@^7.10.1:
+  version "7.10.1"
+  resolved "https://registry.yarnpkg.com/edge/-/edge-7.10.1.tgz#68386eac102f39724d273cc19aea30091e2b4ae4"
+  dependencies:
+    edge-cs "1.2.1"
+    nan "^2.0.9"
+
 electron-download@^3.0.1:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/electron-download/-/electron-download-3.3.0.tgz#2cfd54d6966c019c4d49ad65fbe65cc9cdef68c8"
@@ -196,6 +207,13 @@ electron-download@^3.0.1:
     rc "^1.1.2"
     semver "^5.3.0"
     sumchecker "^1.2.0"
+
+electron-edge-js@^8.3.4:
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/electron-edge-js/-/electron-edge-js-8.3.4.tgz#9eb6a0507cbbce7f927ce2e679acb32ff4b9e24b"
+  dependencies:
+    edge-cs "1.2.1"
+    nan "^2.10.0"
 
 electron@*, electron@2.0.1:
   version "2.0.1"
@@ -455,6 +473,10 @@ linq@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/linq/-/linq-3.1.0.tgz#fba9af7619273092e5f1b7d5fef8f0a364f89693"
 
+linqjs@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/linqjs/-/linqjs-0.0.6.tgz#cbfbaf457f87c159fd9f9306d51d0c5c97f7d85a"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -537,6 +559,14 @@ mkdirp@0.5.0:
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+
+multiplexjs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/multiplexjs/-/multiplexjs-1.0.0.tgz#a4b995a54f63f0ff6c0b10846a96359f8e67a08b"
+
+nan@^2.0.9, nan@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
 node-file-exists@^1.1.0:
   version "1.1.0"

@@ -9,8 +9,8 @@
     "experimentalDecorators": true,
     "typeRoots": [
       "node_modules/@types",
-      "node_modules/linq/*.d.ts",
-      "node_modules/electron/*.d.ts"
+      "node_modules/electron/*.d.ts",
+      "node_modules/multiplexjs/src/typescript/*.d.ts"
     ]
   },
   "include": [

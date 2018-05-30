@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+  </PropertyGroup>
+    <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>UR5</RootNamespace>
+  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <LangVersion>latest</LangVersion>
+      <DebugType>full</DebugType>
+      <DebugSymbols>true</DebugSymbols>
+      <DefineConstants>TRACE;DEBUG;JETBRAINS_ANNOTATIONS</DefineConstants>
+      <OutputPath>C:\git\UniversalRobotics\bin\Native\</OutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+</Project>

@@ -185,6 +185,7 @@ export class URCore {
                             base.teachButtonEnabled = packet.readBooleanBE(offset);
                             offset++;
                             URCore.IsMove = Enumerable.from(base.sector).all(x => x.JointSpeed != 0);
+
                             break;
                         case 9:
                             offset += packageLength - 5;
