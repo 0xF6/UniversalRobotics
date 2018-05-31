@@ -2,7 +2,8 @@
 
 
     
-![image](https://david-dm.org/0xF6/UniversalRobotics.svg)
+![image](https://david-dm.org/0xF6/UniversalRobotics.svg)[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F0xF6%2FUniversalRobotics.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2F0xF6%2FUniversalRobotics?ref=badge_shield)
+
 
 ![image](https://user-images.githubusercontent.com/13326808/40578154-f370abd8-6117-11e8-885b-bb8f3f4ad396.png)
 
@@ -124,3 +125,7 @@ locked = All buttons disabled and "Expert Mode" cannot be activated
 </details>
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F0xF6%2FUniversalRobotics.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2F0xF6%2FUniversalRobotics?ref=badge_large)
