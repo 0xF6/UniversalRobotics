@@ -455,6 +455,10 @@ linq@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/linq/-/linq-3.1.0.tgz#fba9af7619273092e5f1b7d5fef8f0a364f89693"
 
+linqable.ts@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/linqable.ts/-/linqable.ts-1.7.0.tgz#f7203962889e7aaa230aaf9b3e0df965bb50eb6b"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
