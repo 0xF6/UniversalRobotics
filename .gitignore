@@ -76,3 +76,5 @@ UR5Monitor-win32-x64/
 Release/
 
 config\.json
+
+\.fusebox/

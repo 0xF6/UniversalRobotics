@@ -1,7 +1,7 @@
-import { Logger } from "../Tools/Logger";
-import { URMath } from "../Tools/URMath";
 import { UR5Info } from "./UR5Info";
-import * as Enumerable from "linq";
+import 'linqable.ts/build/Extensions';
+import { Logger } from "../../tools/Logger";
+import { URMath } from "../../tools/URMath";
 
 export class URCore {
     public static PacketID: number = 0;
@@ -184,7 +184,7 @@ export class URCore {
                             offset++;
                             base.teachButtonEnabled = packet.readBooleanBE(offset);
                             offset++;
-                            URCore.IsMove = Enumerable.from(base.sector).all(x => x.JointSpeed != 0);
+                            URCore.IsMove = base.sector.All(x => x.JointSpeed != 0);
                             break;
                         case 9:
                             offset += packageLength - 5;

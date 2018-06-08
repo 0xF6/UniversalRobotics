@@ -3,14 +3,17 @@
     "target": "es6",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "bin",
-    "rootDir": "src",
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": false,
+    "noUnusedLocals": true,
+    "strictNullChecks": false,
+    "noImplicitReturns": true,
     "typeRoots": [
       "node_modules/@types",
-      "node_modules/linq/*.d.ts",
-      "node_modules/electron/*.d.ts"
+      "node_modules/electron/*.d.ts",
+      "node_modules/linqable.ts/build/**/*.d.ts"
     ]
   },
   "include": [
