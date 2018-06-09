@@ -2,8 +2,7 @@ const { app, BrowserWindow } = require("electron")
 const WindowStateManager = require("electron-window-state-manager")
 import { loadURL } from "./load-url";
 
-export const DIMENSIONS = { width: 600, height: 500, minWidth: 450, minHeight: 450 }
-
+export const DIMENSIONS = { width: 800, height: 550 }
 
 /**
  * Creates the main window.
@@ -21,35 +20,27 @@ export function createMainWindow(appPath: string, showDelay: number = 100) {
   
     // create our main window
     const window = new BrowserWindow({
-      minWidth: DIMENSIONS.minWidth,
-      minHeight: DIMENSIONS.minHeight,
-      width: windowState.width,
-      height: windowState.height,
+      width: DIMENSIONS.width,
+      height: DIMENSIONS.height,
       x: windowState.x,
       y: windowState.y,
       show: false,
       useContentSize: true,
       titleBarStyle: "hiddenInset",
       autoHideMenuBar: true,
-      // backgroundColor: '#fff',
       vibrancy: "light",
-      transparent: true,
       title: app.getName(),
+      resizable: false,
+      maximizable: false,
       webPreferences: {
         backgroundThrottling: false,
         textAreasAreResizable: false,
       },
     })
-  
-    // maximize if we did before
-    if (windowState.maximized) {
-      window.maximize()
-    }
-  
+    
     // trap movement events
     window.on("close", () => windowState.saveState(window))
     window.on("move", () => windowState.saveState(window))
-    window.on("resize", () => windowState.saveState(window))
   
     // load entry html page in the renderer.
     loadURL(window, appPath)

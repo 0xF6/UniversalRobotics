@@ -1,9 +1,9 @@
 export class Logger {
     public static IsEscapeEnabled: boolean = true;
 
-    private static EscapeEnd: string = "\x1b[39m";
+    //private static EscapeEnd: string = "\x1b[39m";
 
-    private static EscapeTemplate: string = "\x1b[38;2;{R};{G};{B}m";
+    //private static EscapeTemplate: string = "\x1b[38;2;{R};{G};{B}m";
 
     public static Log(str: any) {
         if (!Logger.IsEscapeEnabled) {

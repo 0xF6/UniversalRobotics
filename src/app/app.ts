@@ -18,8 +18,7 @@ const appPath = app.getAppPath()
 
 app.on("ready", () => {
 window = createMainWindow(appPath)
-    createMenu(window)
-
+    createMenu(window);
     if (isDev) {
         window.webContents.on("did-fail-load", () => {
         dialog.showErrorBox(

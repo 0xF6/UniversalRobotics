@@ -2,7 +2,7 @@
   "name": "ur5",
   "version": "0.47.0-beta",
   "description": "Platform for manage UniversalRobotics UR5",
-  "main": "out/app.js",
+  "main": "out/main.js",
   "author": {
     "email": "ls-micro@ya.ru",
     "name": "Yuuki Wesp"
@@ -31,7 +31,7 @@
     "electron-window-state-manager": "^0.3.2",
     "glamor": "^2.20.40",
     "jquery": "^3.3.1",
-    "linqable.ts": "^1.7.0",
+    "linqable.ts": "^1.7.2",
     "mathjs": "^4.2.2",
     "mousetrap": "^1.6.2",
     "node-file-exists": "^1.1.0",
@@ -43,7 +43,8 @@
   },
   "scripts": {
     "compile": "NODE_ENV=production ts-node fuse",
-    "start": "ts-node fuse"
+    "start": "ts-node fuse",
+    "dist": "electron-builder --linux --x64"
   },
   "repository": {
     "type": "git",

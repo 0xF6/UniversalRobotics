@@ -1,14 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .ua-win-chrome body {
+                text-rendering: auto;
+            }
+            body {
+                color: #3f3f3f;
+                font: 82%/1.5 "Helvetica Neue", Arial, sans-serif;
+            }
+            .page-content-wrapper {
+                display: table;
+                height: 100%;
+                width: 100%;
+            }
+            #pageContent {
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                padding-top: 115px;
+                padding-bottom: 115px;
+            }
+            #pageContent h1 {
+                margin: 0 0 5px;
+                padding: 0;
+                font-size: 230%;
+                font-weight: 200;
+            }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-</head>
+            .stage-status {
+                margin-top: 1.5em;
+            }
 
-<body>
-  <div id='root'></div>
-  <script type="text/javascript" src="renderer.js"></script>
-</body>
+            .stage-status .stage-status__icon {
+                vertical-align: text-top;
+            }
 
+            .icon-refresh {
+                color: #24B275;
+            }
+
+            .icon-refresh {
+                color: #24B275;
+            }
+
+            .icon-spin .icon-refresh {
+                width: 16px;
+                height: 16px;
+                background-image: url("images/ajax-loader.gif");
+            }
+
+            .icon-refresh:before {
+                content: '';
+            }
+
+            .icon-spin {
+                display: inline-block;
+                -webkit-animation: spin 2s infinite linear;
+                animation: spin 2s infinite linear;
+            }
+
+            a .icon-stack,
+            a .icon-spin {
+                display: inline-block;
+                text-decoration: none;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(359deg);
+                }
+            }
+
+            .stage-status .stage-status__icon {
+                vertical-align: text-top;
+            }
+
+            .stage-status+#auto-refresh-note {
+                color: #bebebe;
+                margin-top: -1em;
+            }
+        </style>
+        <style>
+            .sk-cube-grid {
+                width: 40px;
+                height: 40px;
+                margin: 100px auto;
+            }
+
+            .sk-cube-grid .sk-cube {
+                width: 33%;
+                height: 33%;
+                background-color: #333;
+                float: left;
+                -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+                animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            }
+
+            .sk-cube-grid .sk-cube1 {
+                -webkit-animation-delay: 0.2s;
+                animation-delay: 0.2s;
+            }
+
+            .sk-cube-grid .sk-cube2 {
+                -webkit-animation-delay: 0.3s;
+                animation-delay: 0.3s;
+            }
+
+            .sk-cube-grid .sk-cube3 {
+                -webkit-animation-delay: 0.4s;
+                animation-delay: 0.4s;
+            }
+
+            .sk-cube-grid .sk-cube4 {
+                -webkit-animation-delay: 0.1s;
+                animation-delay: 0.1s;
+            }
+
+            .sk-cube-grid .sk-cube5 {
+                -webkit-animation-delay: 0.2s;
+                animation-delay: 0.2s;
+            }
+
+            .sk-cube-grid .sk-cube6 {
+                -webkit-animation-delay: 0.3s;
+                animation-delay: 0.3s;
+            }
+
+            .sk-cube-grid .sk-cube7 {
+                -webkit-animation-delay: 0s;
+                animation-delay: 0s;
+            }
+
+            .sk-cube-grid .sk-cube8 {
+                -webkit-animation-delay: 0.1s;
+                animation-delay: 0.1s;
+            }
+
+            .sk-cube-grid .sk-cube9 {
+                -webkit-animation-delay: 0.2s;
+                animation-delay: 0.2s;
+            }
+
+            @-webkit-keyframes sk-cubeGridScaleDelay {
+                0%,
+                70%,
+                100% {
+                    -webkit-transform: scale3D(1, 1, 1);
+                    transform: scale3D(1, 1, 1);
+                }
+                35% {
+                    -webkit-transform: scale3D(0, 0, 1);
+                    transform: scale3D(0, 0, 1);
+                }
+            }
+
+            @keyframes sk-cubeGridScaleDelay {
+                0%,
+                70%,
+                100% {
+                    -webkit-transform: scale3D(1, 1, 1);
+                    transform: scale3D(1, 1, 1);
+                }
+                35% {
+                    -webkit-transform: scale3D(0, 0, 1);
+                    transform: scale3D(0, 0, 1);
+                }
+            }
+        </style>
+    </head>
+    <body style="margin: 0px;">
+        <div id='root'></div>
+        <script type="text/javascript" src="renderer.js"></script>
+    </body>
 </html>

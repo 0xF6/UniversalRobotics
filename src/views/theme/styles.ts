@@ -25,7 +25,6 @@ const electron = {
   /** Disable window dragging. */
   //noWindowDrag: cssProps({ WebkitAppRegion: "no-drag" }),
 }
-
 /**
  * Full screen and disable the scrolling.
  */

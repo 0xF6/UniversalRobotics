@@ -1,5 +1,5 @@
 import { RobotMode } from "./RobotModes";
-import { URMath } from "../Tools/URMath";
+import { URMath } from "../../tools/URMath";
 
 export class UR5Info {
     constructor() {

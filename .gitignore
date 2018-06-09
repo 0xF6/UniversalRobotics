@@ -78,3 +78,7 @@ Release/
 config\.json
 
 \.fusebox/
+
+dist/
+
+out/

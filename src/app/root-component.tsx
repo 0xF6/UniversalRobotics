@@ -1,6 +1,7 @@
 import * as React from "react"
 import { compose } from "glamor"
 import { styles, colors } from "./../views/theme"
+import { StartScreen } from "../views/welcome-screen/welcome-screen";
 
 const ROOT = compose(styles.fullScreen, {
   background: colors.window.background,
@@ -13,6 +14,7 @@ export class RootComponent extends React.Component<{}, {}> {
   render() {
     return (
       <div {...ROOT}>
+        <StartScreen/>
       </div>
     )
   }

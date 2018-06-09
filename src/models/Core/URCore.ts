@@ -1,5 +1,5 @@
 import { UR5Info } from "./UR5Info";
-import 'linqable.ts/build/Extensions';
+import 'linqable.ts';
 import { Logger } from "../../tools/Logger";
 import { URMath } from "../../tools/URMath";
 
@@ -32,8 +32,6 @@ export class URCore {
                 return undefined;
             case 16: // normal packet
                 while (offset < size_packet) {
-
-                    let packet_start = offset;
                     let packageLength = packet.readInt32BE(offset);
                     offset += 4;
                     let packet_type = packet.readByteBE(offset);
